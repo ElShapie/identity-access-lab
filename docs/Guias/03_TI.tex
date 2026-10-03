@@ -1,0 +1,223 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries Tecnologías de la Información\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+\Needspace{5\baselineskip}\section*{Objetivo y reparto}
+Preparar la red, la aplicación del servidor y Microsoft 365. IAM conecta OneLogin y Seguridad Física administra Frigate con apoyo técnico de TI.\par
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{7.760cm}p{7.760cm}}
+\toprule
+\textbf{Puesto genérico} & \textbf{Trabajo} \\ \midrule\endfirsthead
+\textbf{Puesto genérico} & \textbf{Trabajo} \\ \midrule\endhead
+Registro de personal validado por RRHH & Mantener registro validado por RRHH \\
+Responsable de TI & Coordinar TI y aprobar permisos del servidor \\
+Ingeniero de redes A & Conexiones y mantenimiento durante el recorrido \\
+Ingeniero de redes B & Topología y pruebas de red \\
+Administrador de sistemas & Aplicación y servicio del servidor \\
+Administrador de Microsoft 365 & Microsoft 365 \\
+Técnico de soporte & Soporte, MFA y evidencias \\
+\bottomrule\end{longtable}}
+Laptop TI 1 aloja aplicación; TI 2 administra red/Microsoft 365. Comandos Linux en Ubuntu 24.04 de 64 bits. No cambiar el sistema de una laptop sin acuerdo de su propietario.\par
+\Needspace{5\baselineskip}\section*{Paso 1. Preparar Ubuntu}
+Si ya hay Ubuntu, abrir Terminal. Si usan una máquina virtual, preparar Ubuntu con 2 procesadores virtuales, 4 GB de RAM y 20 GB de disco como punto de partida para la aplicación. En el NVR, preferir 4 procesadores, 8 GB y almacenamiento de video separado; son recomendaciones para ensayo, no requisitos garantizados.\par
+Para el NVR virtual, seleccionar adaptador de red en modo puente para que tenga una dirección propia accesible desde los teléfonos. Una conexión Ethernet suele facilitarlo. Si el modo puente no funciona sobre Wi-Fi, probar primero conectividad y corregir red antes de instalar cámaras. No asignar al host y a la máquina virtual la misma dirección.\par
+Verificar el sistema y la hora:\par
+\Needspace{8\baselineskip}
+\begin{Comandos}
+cat /etc/os-release
+uname -m
+ip -br address
+ip route
+timedatectl
+\end{Comandos}
+Configurar hora de Mérida y sincronización:\par
+\Needspace{5\baselineskip}
+\begin{Comandos}
+sudo timedatectl set-timezone UTC
+sudo timedatectl set-ntp true
+\end{Comandos}
+Resultado: Ubuntu identificado, dirección de red conocida y hora coherente con los equipos.\par
+\Needspace{5\baselineskip}\section*{Paso 2. Conectar la red}
+\begin{enumerate}
+\item Conectar router/punto de acceso al switch 1.
+\item Conectar switch 2 con un solo cable al switch 1, si existe.
+\item Cablear primero servidor, NVR y SOC; otros equipos pueden usar Wi-Fi.
+\item Conectar teléfonos al mismo Wi-Fi de laboratorio. Evitar una red de invitados que impida comunicación entre dispositivos.
+\item Configurar reservas de dirección en el router usando la tabla inicial. Si no administran el router, conservar su red real y actualizar el paquete.
+\item Registrar puertos, cables y direcciones en \textnormal{Plantillas/\allowbreak{}inventario.csv}.
+\end{enumerate}
+En Ubuntu:\par
+\Needspace{5\baselineskip}
+\begin{Comandos}
+ping -c 4 10.31.0.1
+ping -c 4 10.31.0.20
+\end{Comandos}
+En PowerShell de Windows:\par
+\Needspace{6\baselineskip}
+\begin{Comandos}
+ipconfig
+ping 10.31.0.1
+Test-NetConnection 10.31.0.20 -Port 8971
+\end{Comandos}
+Un teléfono puede no responder a ping. Para cámaras, comprobar también el puerto y la imagen. Dos switches no separan automáticamente la red en zonas protegidas.\par
+\Needspace{5\baselineskip}\section*{Paso 3. Instalar Docker en el servidor y NVR}
+Ejecutar en cada Ubuntu designado. Si Docker ya funciona, comprobar versión y no reinstalarlo. Si existen paquetes de otra distribución, revisar el apartado de conflictos en la referencia oficial antes de continuar.\par
+\Needspace{8\baselineskip}
+\begin{Comandos}
+sudo apt update
+sudo apt install -y ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+\end{Comandos}
+Crear el repositorio:\par
+\Needspace{16\baselineskip}
+\begin{Comandos}
+sudo tee /etc/apt/sources.list.d/docker.sources > /dev/null <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo systemctl enable --now docker
+sudo docker run --rm hello-world
+sudo docker compose version
+\end{Comandos}
+Resultado: el contenedor de prueba imprime su confirmación y Compose muestra versión. Utilizar \textnormal{sudo} en estos comandos; no añadir a todos los alumnos al grupo administrativo de Docker.\par
+\Needspace{5\baselineskip}\section*{Paso 4. Preparar la aplicación}
+Copiar \textnormal{Implementacion/\allowbreak{}app/\allowbreak{}} a \textnormal{\textasciitilde{}/\allowbreak{}lab-runtime/\allowbreak{}app/\allowbreak{}} conservando archivos ocultos.\par
+\Needspace{11\baselineskip}
+\begin{Comandos}
+sudo apt install -y python3-venv
+cd ~/lab-runtime/app
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m unittest -v test_store.py
+cp .env.example .env
+chmod 600 .env
+\end{Comandos}
+Las pruebas verifican permisos y bajas locales, no la conexión OneLogin. Si fallan, no avanzar al ensayo.\par
+Generar dos secretos diferentes:\par
+\Needspace{5\baselineskip}
+\begin{Comandos}
+python -c 'import secrets; print(secrets.token_urlsafe(48))'
+python -c 'import secrets; print(secrets.token_urlsafe(48))'
+\end{Comandos}
+Guardar uno como APP\_SECRET y el otro como SCIM\_TOKEN en \textnormal{.env}, usando un editor. IAM proporcionará Client ID, Client Secret y dirección de configuración OIDC. No subir \textnormal{.env} al informe ni al control compartido.\par
+\Needspace{5\baselineskip}\section*{Paso 5. Dar una dirección HTTPS a la aplicación}
+La nube de OneLogin necesita llegar a la conexión de altas/bajas. Este diseño usa un túnel temporal de Cloudflare solo hacia la aplicación de práctica. No apunta al NVR, lector ni consolas administrativas.\par
+En una terminal aparte del servidor:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+sudo docker run --rm --network host cloudflare/cloudflared:latest tunnel --url http://127.0.0.1:8000
+\end{Comandos}
+Anotar la dirección \textnormal{https:/\allowbreak{}/\allowbreak{}...trycloudflare.com} que aparece. Mantener la terminal abierta. Al reiniciar el túnel puede cambiar: actualizar APP\_BASE\_URL, callback OIDC y base SCIM. Para un ensayo largo o direcciones persistentes, TI puede preparar un túnel con nombre mediante la documentación oficial.\par
+Esta dirección publica solo la aplicación del laboratorio. Usar cuentas de prueba, API protegida con token y no incluir datos ajenos al ejercicio.\par
+\Needspace{5\baselineskip}\section*{Paso 6. Iniciar y comprobar aplicación}
+Completar \textnormal{.env} con IAM. OIDC\_METADATA\_URL se copia del tenant real; el ejemplo no es una cuenta existente.\par
+\Needspace{10\baselineskip}
+\begin{Comandos}
+cd ~/lab-runtime/app
+source .venv/bin/activate
+set -a
+source .env
+set +a
+mkdir -p data
+gunicorn --workers 1 --bind 127.0.0.1:8000 --access-logfile - --error-logfile - app:app
+\end{Comandos}
+En otra terminal:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+curl http://127.0.0.1:8000/health
+\end{Comandos}
+Debe devolver \textnormal{\{"status":"ok"\}}. Abrir la dirección HTTPS en el navegador de otra laptop. La pantalla debe ofrecer inicio de sesión con OneLogin. Antes de aprovisionar la cuenta, un inicio autenticado puede terminar en 403: la aplicación exige cuenta local activa recibida por SCIM.\par
+Las acciones de mantenimiento y administración son operaciones de práctica registradas. No ejecutan comandos del sistema operativo. Los botones se muestran para que puedan probar un rechazo de servidor; ocultarlos no sería una prueba suficiente.\par
+Cuando funcione, conservar versiones instaladas:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+python -m pip freeze > versiones_instaladas.txt
+\end{Comandos}
+Mantener servicio y túnel abiertos durante la exposición. Para detener, Ctrl+C en sus terminales. Si desean arranque automático de la aplicación, hacerlo después de completar la integración; el funcionamiento inicial no depende de ello.\par
+\Needspace{5\baselineskip}\section*{Paso 7. Microsoft 365: crear y modificar cuenta}
+En TI 2, abrir \textnormal{https:/\allowbreak{}/\allowbreak{}admin.microsoft.com} con la cuenta administrativa autorizada.\par
+\begin{enumerate}
+\item Ir a Usuarios \(\rightarrow\) Usuarios activos \(\rightarrow\) Agregar usuario, o su equivalente en la vista disponible.
+\item Usar nombre y correo acordados con RRHH.
+\item Configurar contraseña inicial y cambio en primer inicio.
+\item Seleccionar ubicación y licencia realmente disponible. Si no hay licencia, pedir el recurso para demostrar ese punto; no comprar una por iniciativa propia.
+\item Revisar roles. Los empleados comunes no requieren un rol administrativo. Para las operaciones de cuentas y licencias, usar los permisos mínimos del operador.
+\item Crear la cuenta y guardar evidencia sin contraseña.
+\item Modificar un dato de perfil y registrar antes/después.
+\item Crear otra cuenta temporal para demostrar eliminación al finalizar, sin destruir la identidad principal antes del recorrido.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 8. Contraseña, MFA y roles}
+\begin{enumerate}
+\item Seleccionar la cuenta de prueba y restablecer contraseña.
+\item Pedir cambio al siguiente inicio y que el usuario configure una frase larga y distinta de sus otras cuentas.
+\item Documentar las políticas que realmente muestra el tenant. No afirmar que configuraron una política personalizada si solo se aplica la predeterminada.
+\item Entrar a \textnormal{https:/\allowbreak{}/\allowbreak{}entra.microsoft.com} y revisar Entra ID \(\rightarrow\) Información general/Propiedades \(\rightarrow\) Administrar valores predeterminados de seguridad, según la vista.
+\item En un tenant de laboratorio sin otras políticas, usar valores predeterminados de seguridad para la protección base. Si ya hay Acceso Condicional, trabajar con la política autorizada existente.
+\item El usuario registra su método en \textnormal{https:/\allowbreak{}/\allowbreak{}mysignins.microsoft.com/\allowbreak{}security-info}.
+\item Probar un inicio nuevo y conservar evidencia de una solicitud MFA real. Las políticas pueden reutilizar verificaciones y no pedir MFA en cada inicio; no confundir registro del método con una prueba de desafío.
+\item IAM configurará además la política de MFA de OneLogin para la aplicación. Un MFA de Microsoft 365 no protege automáticamente un inicio independiente de OneLogin.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 9. Auditoría, amenazas y baja}
+\begin{enumerate}
+\item En Entra, abrir Supervisión y estado \(\rightarrow\) Registros de auditoría y Registros de inicio de sesión.
+\item Filtrar por cuenta y periodo del ensayo. Compartir exportación con SOC.
+\item Si se exige auditoría de actividades Microsoft 365, revisar también Microsoft Purview \(\rightarrow\) Auditoría según permisos/licencias. Distinguir ambos registros.
+\item En \textnormal{https:/\allowbreak{}/\allowbreak{}security.microsoft.com}, revisar alertas/incidentes que permita la licencia. Explicar un resultado vacío sin inventar amenazas. Las vistas de riesgo avanzadas pueden requerir otras licencias.
+\item Para la baja, bloquear inicio de sesión y cerrar/revocar sesiones con las opciones de la cuenta. No asegurar que todos los servicios aplican el cambio instantáneamente.
+\item Eliminar la cuenta temporal y guardar evidencia.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Problemas frecuentes}
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{7.760cm}p{7.760cm}}
+\toprule
+\textbf{Problema} & \textbf{Revisar} \\ \midrule\endfirsthead
+\textbf{Problema} & \textbf{Revisar} \\ \midrule\endhead
+NVR no abre desde otro equipo & Dirección del host/VM, puerto, conexión puente y aislamiento Wi-Fi \\
+Docker no inicia & \textnormal{sudo systemctl status docker} \\
+Aplicación no inicia & \textnormal{.env}, secretos, ruta, dependencias y error de Gunicorn \\
+502 en el túnel & Gunicorn detenido o puerto distinto de 8000 \\
+Callback rechazado & URL exacta y actualización tras reiniciar túnel \\
+Usuario autentica pero obtiene 403 & Cuenta SCIM activa, correo exacto y rol configurado \\
+Menú Microsoft no aparece & Cuenta administrativa, permisos y licencia \\
+\bottomrule\end{longtable}}
+\Needspace{5\baselineskip}\section*{Entregan}
+Topología actualizada, inventario de direcciones, aplicación, versiones instaladas, pruebas de conectividad y evidencias de Microsoft 365. Entregar a SOC registros sin secretos.\par
+\Needspace{5\baselineskip}\section*{Referencias y videos}
+\begin{itemize}
+\item \href{https://docs.docker.com/engine/install/ubuntu/}{Docker: instalación oficial Ubuntu}.
+\item \href{https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/}{Cloudflare: túneles temporales}.
+\item \href{https://github.com/authlib/authlib/blob/main/docs/client/flask.rst}{Authlib: integración Flask}.
+\item \href{https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/add-users?view=o365-worldwide}{Microsoft: alta de usuarios y licencias, con video integrado}.
+\item \href{https://www.youtube.com/watch?v=8ShQqMZmhRg}{Video Microsoft: restablecer contraseñas}.
+\item \href{https://learn.microsoft.com/en-us/microsoft-365/admin/security-and-compliance/set-up-multi-factor-authentication}{Microsoft: MFA}.
+\item \href{https://learn.microsoft.com/en-us/entra/fundamentals/security-defaults}{Microsoft: valores predeterminados de seguridad}.
+\item \href{https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs}{Microsoft: auditoría Entra}.
+\item Referencias y videos del paquete (REFERENCIAS\_Y\_VIDEOS.pdf).
+\end{itemize}
+\end{document}

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1390" viewBox="0 0 1500 1390"><rect width="100%" height="100%" fill="white"/>
+<text x="45" y="64" font-family="Times New Roman, Times, serif" font-size="34" font-weight="700" fill="black">TI</text>
+<text x="45" y="101" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Personas, secuencia de trabajo y dos laptops del área.</text>
+<polyline points="45,125 1455,125" fill="none" stroke="black" stroke-width="2"/>
+<text x="45" y="176" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Puestos</text>
+<text x="640" y="176" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Flujo de trabajo</text>
+<rect x="45" y="195" width="550" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="59" y="221" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-007</text>
+<text x="59" y="250" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 007</text>
+<text x="59" y="292" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Registro de personal validado por RRHH</text>
+<rect x="45" y="335" width="550" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="59" y="361" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-008</text>
+<text x="59" y="390" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 008</text>
+<text x="59" y="432" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Responsable de TI</text>
+<rect x="45" y="475" width="550" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="59" y="501" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">LAB-INGENIERO · Acceso físico</text>
+<text x="59" y="530" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 009</text>
+<text x="59" y="572" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Ingeniero de redes A</text>
+<rect x="45" y="615" width="550" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="59" y="641" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-010</text>
+<text x="59" y="670" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 010</text>
+<text x="59" y="712" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Ingeniero de redes B</text>
+<rect x="45" y="755" width="550" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="59" y="781" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">LAB-ADMIN · Acceso físico</text>
+<text x="59" y="810" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 011</text>
+<text x="59" y="852" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Administrador de sistemas</text>
+<rect x="45" y="895" width="550" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="59" y="921" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-012</text>
+<text x="59" y="950" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 012</text>
+<text x="59" y="992" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Administrador de Microsoft 365</text>
+<rect x="45" y="1035" width="550" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="59" y="1061" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-013</text>
+<text x="59" y="1090" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 013</text>
+<text x="59" y="1132" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Técnico de soporte</text>
+<rect x="640" y="195" width="805" height="112" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="658" y="233" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">1. Preparar Ubuntu y red</text>
+<polyline points="1042,307 1042,340" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="1042,340 1036.345448056554,328.2941876694152 1047.654551943446,328.2941876694152" fill="black"/>
+<rect x="640" y="345" width="805" height="112" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="658" y="383" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">2. Instalar servicios de laboratorio</text>
+<polyline points="1042,457 1042,490" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="1042,490 1036.345448056554,478.2941876694152 1047.654551943446,478.2941876694152" fill="black"/>
+<rect x="640" y="495" width="805" height="112" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="658" y="533" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">3. Alojar aplicación HTTPS</text>
+<polyline points="1042,607 1042,640" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="1042,640 1036.345448056554,628.2941876694152 1047.654551943446,628.2941876694152" fill="black"/>
+<rect x="640" y="645" width="805" height="112" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="658" y="683" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">4. Administrar Microsoft 365</text>
+<polyline points="1042,757 1042,790" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="1042,790 1036.345448056554,778.2941876694152 1047.654551943446,778.2941876694152" fill="black"/>
+<rect x="640" y="795" width="805" height="112" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="658" y="833" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">5. Entregar registros y soporte</text>
+<rect x="640" y="1000" width="805" height="155" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="658" y="1038" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">Equipos asignados</text>
+<text x="658" y="1071" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Laptop 1: aplicación y túnel HTTPS</text>
+<text x="658" y="1100" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Laptop 2: red y Microsoft 365</text>
+<rect x="640" y="1190" width="805" height="115" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="658" y="1227" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Resultado</text>
+<text x="658" y="1259" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Guía del área, implementación y evidencia de pruebas.</text>
+<text x="45" y="1364" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="black">IDENTITY ACCESS LAB | Diseño de laboratorio | 02/10/2026</text>
+</svg>

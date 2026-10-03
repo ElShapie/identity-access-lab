@@ -1,0 +1,189 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries Guía para usar los archivos Python\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+\Needspace{5\baselineskip}\section*{Qué hace cada archivo y quién lo utiliza}
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{3.660cm}p{3.660cm}p{3.660cm}p{3.660cm}}
+\toprule
+\textbf{Archivo} & \textbf{Responsable y laptop} & \textbf{Función} & \textbf{Forma de uso} \\ \midrule\endfirsthead
+\textbf{Archivo} & \textbf{Responsable y laptop} & \textbf{Función} & \textbf{Forma de uso} \\ \midrule\endhead
+\textnormal{app.py} & TI, laptop del servidor Ubuntu & Abre la aplicación web, conecta el inicio de sesión OneLogin y recibe altas, cambios y bajas & Se inicia mediante Gunicorn \\
+\textnormal{store.py} & TI, misma carpeta del servidor & Guarda usuarios, permisos y eventos en SQLite & Lo utiliza \textnormal{app.py}; no se ejecuta por separado \\
+\textnormal{test\_\allowbreak{}store.py} & TI y Auditoría & Comprueba siete casos de permisos y bajas & Se ejecuta con unittest \\
+\textnormal{registrar\_\allowbreak{}tarjetas.py} & Seguridad Física, laptop conectada por USB a la placa & Guarda las lecturas de tarjetas en un CSV con hora & Se ejecuta con Python indicando el puerto \\
+\bottomrule\end{longtable}}
+Los archivos Python están en \textnormal{Implementacion/\allowbreak{}app/\allowbreak{}} y \textnormal{Implementacion/\allowbreak{}rfid/\allowbreak{}}. El archivo \textnormal{control\_\allowbreak{}acceso.ino} se carga a la placa desde Arduino IDE; no es Python. Frigate se inicia con Docker Compose, no con estos scripts. No hace falta ejecutar Python en las 31 laptops.\par
+\Needspace{5\baselineskip}\section*{1. Preparar las carpetas}
+Descomprimir el paquete completo. Copiar la carpeta \textnormal{app} con todos sus archivos, incluido \textnormal{.env.example}, a \textnormal{\textasciitilde{}/\allowbreak{}lab-runtime/\allowbreak{}app/\allowbreak{}} en la laptop TI. Copiar \textnormal{rfid} a \textnormal{\textasciitilde{}/\allowbreak{}lab-runtime/\allowbreak{}rfid/\allowbreak{}} en la laptop de Seguridad Física. No mezclar ambas carpetas ni renombrar \textnormal{store.py}: la aplicación lo busca por ese nombre.\par
+Los comandos del servidor se ejecutan en Ubuntu 24.04. En Windows, usar la máquina virtual Ubuntu explicada en la guía TI. Los comandos para el registrador RFID sí incluyen una alternativa Windows.\par
+\Needspace{5\baselineskip}\section*{2. Instalar Python para el servidor}
+En una terminal Ubuntu:\par
+\Needspace{11\baselineskip}
+\begin{Comandos}
+sudo apt update
+sudo apt install -y python3 python3-venv python3-pip
+python3 --version
+cd ~/lab-runtime/app
+ls -a
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+\end{Comandos}
+\textnormal{ls -a} debe mostrar \textnormal{app.py}, \textnormal{store.py}, \textnormal{test\_\allowbreak{}store.py}, \textnormal{requirements.txt} y \textnormal{.env.example}. El entorno \textnormal{.venv} mantiene las dependencias de este proyecto separadas. Activarlo cada vez que abran una terminal para trabajar en la aplicación. No usar \textnormal{sudo pip}.\par
+\Needspace{5\baselineskip}\section*{3. Ejecutar las pruebas antes de conectar OneLogin}
+En la carpeta \textnormal{app}, con el entorno activado:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+python -m unittest -v test_store.py
+\end{Comandos}
+El resultado esperado es \textnormal{Ran 7 tests} y \textnormal{OK}. Las pruebas comprueban que mantenimiento no tiene administración, un cambio de rol retira el permiso anterior, una cuenta inactiva no puede actuar, el texto \textnormal{false} se interpreta correctamente, un rol desconocido no permite acceso, una identidad no se vincula a otro identificador y una cuenta eliminada pierde acceso. Usan una base temporal y no crean usuarios en OneLogin.\par
+Si aparece \textnormal{FAILED} o \textnormal{ERROR}, leer el nombre de la prueba que falló y entregar el mensaje a TI. No cambiar la prueba para que pase. Estas pruebas no certifican la conexión con OneLogin, la grabación de video ni el lector físico.\par
+\Needspace{5\baselineskip}\section*{4. Configurar las variables de la aplicación}
+\Needspace{8\baselineskip}
+\begin{Comandos}
+cp .env.example .env
+chmod 600 .env
+python -c 'import secrets; print(secrets.token_urlsafe(48))'
+python -c 'import secrets; print(secrets.token_urlsafe(48))'
+nano .env
+\end{Comandos}
+Copiar el primer resultado a \textnormal{APP\_\allowbreak{}SECRET} y el segundo a \textnormal{SCIM\_\allowbreak{}TOKEN}. Son valores distintos. Completar las demás variables con IAM:\par
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{7.760cm}p{7.760cm}}
+\toprule
+\textbf{Variable} & \textbf{Qué poner} \\ \midrule\endfirsthead
+\textbf{Variable} & \textbf{Qué poner} \\ \midrule\endhead
+\textnormal{APP\_\allowbreak{}SECRET} & Secreto generado para proteger la sesión \\
+\textnormal{SCIM\_\allowbreak{}TOKEN} & Secreto generado; se configura también en el conector de aprovisionamiento de OneLogin \\
+\textnormal{APP\_\allowbreak{}BASE\_\allowbreak{}URL} & Dirección HTTPS real del túnel, sin barra final \\
+\textnormal{OIDC\_\allowbreak{}CLIENT\_\allowbreak{}ID} & Identificador que muestra el conector OIDC \\
+\textnormal{OIDC\_\allowbreak{}CLIENT\_\allowbreak{}SECRET} & Secreto de ese conector \\
+\textnormal{OIDC\_\allowbreak{}METADATA\_\allowbreak{}URL} & Dirección de configuración del tenant OneLogin, copiada de la configuración real \\
+\textnormal{APP\_\allowbreak{}DB} & \textnormal{data/\allowbreak{}lab.sqlite}, si se mantiene la estructura propuesta \\
+\bottomrule\end{longtable}}
+El archivo se carga desde una terminal de shell. Mantener valores sin espacios o encerrarlos entre comillas simples. No pegar comandos, sustituciones de shell ni contenido ajeno al proyecto dentro de \textnormal{.env}. No adjuntar ese archivo a evidencias.\par
+\Needspace{5\baselineskip}\section*{5. Abrir el túnel y arrancar el servidor}
+Primero completar la instalación Docker de la guía TI. En una terminal independiente:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+sudo docker run --rm --network host cloudflare/cloudflared:latest tunnel --url http://127.0.0.1:8000
+\end{Comandos}
+Copiar la dirección HTTPS que aparece. Actualizar \textnormal{APP\_\allowbreak{}BASE\_\allowbreak{}URL} en \textnormal{.env}. IAM actualiza también la dirección de retorno OIDC y la base SCIM como indica su guía. Mantener esa terminal abierta.\par
+En otra terminal:\par
+\Needspace{10\baselineskip}
+\begin{Comandos}
+cd ~/lab-runtime/app
+source .venv/bin/activate
+set -a
+source .env
+set +a
+mkdir -p data
+gunicorn --workers 1 --bind 127.0.0.1:8000 --access-logfile - --error-logfile - app:app
+\end{Comandos}
+\textnormal{app:app} significa usar el objeto web llamado \textnormal{app} dentro de \textnormal{app.py}. No ejecutar \textnormal{store.py} ni iniciar el proyecto con \textnormal{python app.py}: el archivo no incluye un servidor de arranque directo. Gunicorn mantiene el servicio funcionando mientras la terminal permanezca abierta.\par
+En una tercera terminal:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+curl http://127.0.0.1:8000/health
+\end{Comandos}
+Debe devolver \textnormal{\{"status":"ok"\}}. Abrir la dirección HTTPS desde otra laptop. El primer botón conduce a OneLogin. Un usuario debe estar autenticado y además existir como cuenta activa aprovisionada en la aplicación. Si aparece 403, IAM revisa su cuenta SCIM, correo y rol; no se habilita un acceso local alternativo para saltar la prueba.\par
+\Needspace{5\baselineskip}\section*{6. Qué guardar como evidencia}
+Guardar la salida de las siete pruebas, la comprobación de salud y capturas de acceso permitido y rechazado. Los registros están en \textnormal{data/\allowbreak{}lab.sqlite}; la aplicación muestra los eventos desde \textnormal{/\allowbreak{}registros} a un usuario con permiso de auditor o administrador. Los roles que reconoce son \textnormal{admin}, \textnormal{mantenimiento}, \textnormal{auditor}, \textnormal{consulta} y \textnormal{sin\_\allowbreak{}acceso}.\par
+El archivo SQLite no se abre como Excel. Antes de copiarlo como respaldo, detener Gunicorn con Ctrl+C y copiar también cualquier archivo asociado de SQLite que exista en la misma carpeta. Para registrar dependencias:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+python -m pip freeze > versiones_instaladas.txt
+\end{Comandos}
+No eliminar la base para resolver un error: se perderían cuentas y eventos. Los botones de mantenimiento y administración registran una operación de práctica; no ejecutan comandos del sistema operativo.\par
+\Needspace{5\baselineskip}\section*{7. Preparar el registrador RFID en Ubuntu}
+Confirmar primero placa y lector. El ejemplo incluido corresponde a Arduino Uno y MFRC522. Seguridad Física debe cargar \textnormal{control\_\allowbreak{}acceso.ino}, reemplazar los cuatro UID y probar el formato de las lecturas antes de ejecutar el registrador. El CSV registra decisiones del microcontrolador; no decide por sí mismo quién entra.\par
+\Needspace{8\baselineskip}
+\begin{Comandos}
+cd ~/lab-runtime/rfid
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install pyserial
+python -m serial.tools.list_ports -v
+\end{Comandos}
+Anotar el puerto que aparece al conectar la placa, por ejemplo \textnormal{/\allowbreak{}dev/\allowbreak{}ttyACM0}. Cerrar el monitor serie de Arduino IDE: solo un programa debe abrir el puerto. Si Ubuntu rechaza el acceso por permisos:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+sudo usermod -aG dialout "$USER"
+\end{Comandos}
+Cerrar completamente la sesión del usuario y volver a entrar para aplicar el grupo. Volver a activar el entorno. No ejecutar el registrador con \textnormal{sudo} como solución habitual.\par
+\Needspace{5\baselineskip}\section*{8. Preparar el registrador RFID en Windows}
+Instalar Python desde la página oficial. Abrir PowerShell y comprobar el lanzador \textnormal{py}. Copiar la carpeta RFID, por ejemplo a \textnormal{C:\textbackslash{}lab-runtime\textbackslash{}rfid}, y ejecutar:\par
+\Needspace{8\baselineskip}
+\begin{Comandos}
+cd C:\lab-runtime\rfid
+py --version
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install pyserial
+.\.venv\Scripts\python.exe -m serial.tools.list_ports -v
+\end{Comandos}
+Esta alternativa llama directamente al Python del entorno y no necesita modificar la política de ejecución de PowerShell. Confirmar el puerto real, por ejemplo \textnormal{COM3}, en el listado o en el Administrador de dispositivos. Cerrar el monitor serie de Arduino IDE.\par
+\Needspace{5\baselineskip}\section*{9. Registrar entrada y salida}
+Ubuntu, reemplazando el puerto si corresponde:\par
+\Needspace{6\baselineskip}
+\begin{Comandos}
+cd ~/lab-runtime/rfid
+source .venv/bin/activate
+python registrar_tarjetas.py --puerto /dev/ttyACM0 --archivo eventos_rfid.csv
+\end{Comandos}
+Windows:\par
+\Needspace{5\baselineskip}
+\begin{Comandos}
+cd C:\lab-runtime\rfid
+.\.venv\Scripts\python.exe registrar_tarjetas.py --puerto COM3 --archivo eventos_rfid.csv
+\end{Comandos}
+Dejar la terminal abierta. Escribir \textnormal{E} y pulsar Enter para entrada; escribir \textnormal{S} y pulsar Enter para salida. Esperar el mensaje de modo solicitado antes de pasar la tarjeta. Este es un único lector con dirección seleccionada por el operador, no un sistema que detecta automáticamente por qué lado camina una persona.\par
+La placa debe enviar una línea como \textnormal{ENTRADA,AB12CD34,PERMITIDO,LAB-INGENIERO}. El registrador acepta cuatro campos, movimiento ENTRADA/SALIDA y resultado PERMITIDO/DENEGADO. Otros mensajes se muestran pero no se guardan como evento. El UID del ejemplo es ficticio.\par
+El CSV contiene hora UTC, hora local, movimiento, UID, resultado y empleado. Si el archivo ya existe, agrega filas sin borrar lo anterior. La hora es la recepción en la laptop: sincronizar su reloj antes del ensayo. El arranque serie puede reiniciar una placa Uno; esperar a que esté lista antes de pasar tarjetas.\par
+Detener con Ctrl+C antes de abrir el CSV en Excel o copiarlo al SOC. Hacer tres comprobaciones: tarjeta permitida, tarjeta denegada y salida de una tarjeta permitida. Confirmar las tres filas y relacionarlas con el video del mismo momento.\par
+\Needspace{5\baselineskip}\section*{10. Apagar y volver a iniciar}
+Para la aplicación, usar Ctrl+C en Gunicorn y luego en la terminal del túnel. Para el lector, Ctrl+C en el registrador. La base y el CSV permanecen guardados. La próxima sesión exige activar el entorno, cargar \textnormal{.env} y volver a iniciar Gunicorn. Si la dirección del túnel cambió, actualizar los tres lugares indicados antes de probar OneLogin.\par
+\Needspace{5\baselineskip}\section*{Problemas frecuentes}
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{7.760cm}p{7.760cm}}
+\toprule
+\textbf{Mensaje o situación} & \textbf{Solución} \\ \midrule\endfirsthead
+\textbf{Mensaje o situación} & \textbf{Solución} \\ \midrule\endhead
+\textnormal{ModuleNotFoundError: flask} o \textnormal{authlib} & Activar \textnormal{.venv} de la aplicación e instalar \textnormal{requirements.txt} \\
+\textnormal{ModuleNotFoundError: serial} & Instalar \textnormal{pyserial} en el entorno RFID; no instalar un paquete llamado \textnormal{serial} \\
+\textnormal{KeyError: APP\_\allowbreak{}SECRET} u otra variable & Cargar \textnormal{.env} con \textnormal{set -a}, \textnormal{source .env}, \textnormal{set +a} \\
+Error de secretos o URL HTTPS & Sustituir los ejemplos, usar secretos largos y la URL HTTPS real \\
+\textnormal{Address already in use} & Hay otro servidor usando el puerto 8000; detener la instancia previa antes de arrancar otra \\
+Error de acceso al puerto serie & Confirmar puerto, permisos y que Arduino IDE u otro proceso no lo tengan abierto \\
+La terminal muestra lecturas pero no hay filas CSV & Revisar el formato de cuatro campos que envía la placa \\
+502 desde el túnel & Comprobar Gunicorn y \textnormal{/\allowbreak{}health} en la laptop TI \\
+403 después del inicio OneLogin & Revisar cuenta aprovisionada activa, correo y rol con IAM \\
+El CSV muestra otra hora & Corregir zona horaria y reloj; no editar la evidencia para simular un evento \\
+\bottomrule\end{longtable}}
+\Needspace{5\baselineskip}\section*{Referencias}
+\begin{itemize}
+\item \href{https://docs.python.org/3/using/index.html}{Python: instalación y uso}.
+\item \href{https://docs.python.org/3/library/venv.html}{Python: entornos virtuales}.
+\item \href{https://docs.python.org/3/library/unittest.html}{Python: unittest}.
+\item \href{https://pyserial.readthedocs.io/en/latest/tools.html#serial-tools-list-ports}{pySerial: listado de puertos}.
+\item \href{https://docs.gunicorn.org/en/stable/run.html}{Gunicorn: ejecución}.
+\item Guía TI (03\_TI.pdf) y guía IAM (04\_IAM\_OneLogin.pdf).
+\end{itemize}
+\end{document}

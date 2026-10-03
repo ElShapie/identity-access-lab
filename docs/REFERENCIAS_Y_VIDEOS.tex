@@ -1,0 +1,90 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries Referencias y videos de apoyo\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+Consulta: 2 de octubre de 2026. Las guías contienen un diseño de laboratorio propio. Las referencias documentan plataformas, protocolos y equipos; no garantizan que una función esté habilitada en el tenant del grupo.\par
+\Needspace{5\baselineskip}\section*{Videos}
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{5.027cm}p{5.027cm}p{5.027cm}}
+\toprule
+\textbf{Material} & \textbf{Departamento} & \textbf{Qué revisar} \\ \midrule\endfirsthead
+\textbf{Material} & \textbf{Departamento} & \textbf{Qué revisar} \\ \midrule\endhead
+\href{https://www.onelogin.com/video/groups-roles-and-mappings-oh-my}{OneLogin: Groups, Roles, and Mappings, Oh My!} & Dirección, RRHH, IAM y Auditoría & Diferencia entre grupos, roles y asignación automática \\
+\href{https://www.onelogin.com/resource-center/videos/getting-started-with-identity-lifecycle-management-pt-2}{OneLogin: Identity Lifecycle Management, parte 2} & RRHH, IAM, SOC y Auditoría & Aprovisionamiento, retiro, reglas y aprobación \\
+\href{https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/add-users?view=o365-worldwide}{Microsoft: agregar usuarios y licencias, videos integrados} & TI, RRHH y Auditoría & Alta individual y varias cuentas \\
+\href{https://www.youtube.com/watch?v=8ShQqMZmhRg}{Microsoft: Reset user passwords} & TI & Restablecimiento de contraseña \\
+\href{https://www.youtube.com/watch?v=KMD72_Wfp3E}{Frigate + Docker: Self Hosted CCTV System} & TI, Seguridad Física y SOC & Orientación visual de instalación e interfaz \\
+\href{https://www.youtube.com/watch?v=CQLPo7xqORQ}{Arduino RFID Sensor, MFRC522} & Seguridad Física & Uso del lector, únicamente si coincide el hardware \\
+\bottomrule\end{longtable}}
+Los videos externos pueden usar versiones anteriores. El ejemplo Frigate de este paquete fija 0.17.1; no copiar su configuración de grabación desde un video viejo. La parte de detección de objetos, MQTT y Home Assistant del video no es necesaria para el proyecto. En RFID, prevalecen la hoja de datos y los niveles eléctricos del módulo real.\par
+Los enlaces de video fueron localizados por título, canal o página del fabricante. Algunas páginas no permitieron reproducción automatizada; no se ha verificado cada minuto del contenido. Si un video no abre, utilizar la referencia escrita del mismo tema.\par
+\Needspace{5\baselineskip}\section*{NVR y cámaras}
+\begin{itemize}
+\item \href{https://github.com/blakeblackshear/frigate}{Frigate, repositorio y licencia}.
+\item \href{https://github.com/blakeblackshear/frigate/releases}{Versiones Frigate}: imagen 0.17.1 utilizada en el ejemplo.
+\item \href{https://docs.frigate.video/frigate/installation/}{Instalación}: contenedor, directorios y puertos.
+\item \href{https://docs.frigate.video/configuration/config/}{Configuración}: archivo YAML.
+\item \href{https://docs.frigate.video/configuration/cameras/}{Cámaras}: entradas y funciones de video.
+\item \href{https://docs.frigate.video/configuration/record/}{Grabación}: grabación continua, retención y exportación.
+\item \href{https://docs.frigate.video/configuration/ffmpeg_presets/}{Presets FFmpeg}: lectura RTSP/MJPEG y formato de grabación.
+\item \href{https://docs.frigate.video/configuration/authentication/}{Autenticación}: cuentas y puerto protegido.
+\item \href{https://docs.frigate.video/configuration/tls/}{TLS}: certificados del NVR.
+\item \href{https://docs.frigate.video/troubleshooting/recordings/}{Problemas de grabación}: diagnóstico de video no guardado.
+\item \href{https://play.google.com/store/apps/details?id=com.pas.webcam}{IP Webcam en Google Play}: cámara Android y transmisión local.
+\item \href{https://apps.apple.com/us/app/ip-camera-lite/id1013455241}{IP Camera Lite en App Store}: cámara iPhone, RTSP y limitaciones Lite.
+\end{itemize}
+\Needspace{5\baselineskip}\section*{OneLogin}
+\begin{itemize}
+\item \href{https://developers.onelogin.com/docs/openid-connect/connect-to-onelogin/}{Conectar aplicación OIDC}.
+\item \href{https://developers.onelogin.com/docs/openid-connect/api/provider-config/}{Configuración del proveedor OIDC}.
+\item \href{https://developers.onelogin.com/docs/openid-connect/samples/}{Ejemplos oficiales OIDC}.
+\item \href{https://developers.onelogin.com/docs/scim/define-user-schema/}{Definir esquema SCIM}.
+\item \href{https://developers.onelogin.com/docs/scim/implement-scim-api/}{Implementar API SCIM}.
+\item \href{https://developers.onelogin.com/docs/scim/create-app/}{Crear aplicación SCIM de prueba}.
+\item \href{https://onelogin.service-now.com/kb?id=kb_article_view&sysparm_article=KB0010298}{Introducción al aprovisionamiento}.
+\item \href{https://onelogin.service-now.com/kb?id=kb_article_view&sysparm_article=KB0011995}{Automatización con mappings y rules}.
+\item \href{https://www.onelogin.com/getting-started/free-trial-plan/add-mfa}{Agregar MFA}.
+\item \href{https://support.onelogin.com/kb/4271392/user-policies}{Políticas de usuario}.
+\end{itemize}
+\Needspace{5\baselineskip}\section*{Microsoft 365}
+\begin{itemize}
+\item \href{https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/add-users?view=o365-worldwide}{Agregar usuarios y licencias}.
+\item \href{https://learn.microsoft.com/en-gb/microsoft-365/admin/add-users/reset-passwords?view=o365-worldwide}{Restablecer contraseñas}.
+\item \href{https://learn.microsoft.com/en-us/microsoft-365/admin/security-and-compliance/set-up-multi-factor-authentication}{Configurar MFA}.
+\item \href{https://learn.microsoft.com/en-us/entra/fundamentals/security-defaults}{Valores predeterminados de seguridad}.
+\item \href{https://support.microsoft.com/en-us/office/account-management/set-up-your-microsoft-365-sign-in-for-multi-factor-authentication}{Registrar verificación adicional}.
+\item \href{https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs}{Auditoría Entra}.
+\item \href{https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/remove-former-employee-step-1?view=o365-worldwide}{Bloquear acceso al salir un empleado}.
+\end{itemize}
+\Needspace{5\baselineskip}\section*{Instalación, aplicación y hardware}
+\begin{itemize}
+\item \href{https://docs.docker.com/engine/install/ubuntu/}{Docker Engine en Ubuntu}.
+\item \href{https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/}{Cloudflare Quick Tunnels}.
+\item \href{https://github.com/authlib/authlib/blob/main/docs/client/flask.rst}{Authlib, cliente Flask}.
+\item \href{https://github.com/FiloSottile/mkcert}{mkcert}.
+\item \href{https://github.com/miguelbalboa/rfid}{Biblioteca Arduino MFRC522}.
+\item \href{https://www.arduino.cc/en/software}{Arduino IDE}.
+\end{itemize}
+\Needspace{5\baselineskip}\section*{Informe}
+\begin{itemize}
+\item \href{https://www.ieee.org/conferences/publishing/templates.html}{Plantillas IEEE}.
+\item \href{https://docs.overleaf.com/getting-started/your-first-project}{Primer proyecto en Overleaf}.
+\end{itemize}
+\end{document}

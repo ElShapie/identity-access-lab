@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1280" viewBox="0 0 1500 1280"><rect width="100%" height="100%" fill="white"/>
+<text x="45" y="64" font-family="Times New Roman, Times, serif" font-size="34" font-weight="700" fill="black">Alta, cambio de puesto y baja</text>
+<text x="45" y="101" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">RRHH solicita; el dueño del recurso aprueba; los equipos implementan; Auditoría verifica.</text>
+<polyline points="45,125 1455,125" fill="none" stroke="black" stroke-width="2"/>
+<rect x="230" y="175" width="1040" height="125" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="248" y="213" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">1. RRHH registra solicitud</text>
+<text x="248" y="246" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Empleado, estado, puesto y fecha efectiva.</text>
+<polyline points="750,300 750,333" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="750,333 744.345448056554,321.2941876694152 755.654551943446,321.2941876694152" fill="black"/>
+<rect x="230" y="338" width="1040" height="125" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="248" y="376" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">2. Responsable aprueba</text>
+<text x="248" y="409" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">TI: servidor. Seguridad Física: entrada. Dueño del recurso: otros accesos.</text>
+<polyline points="750,463 750,496" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="750,496 744.345448056554,484.2941876694152 755.654551943446,484.2941876694152" fill="black"/>
+<rect x="230" y="501" width="1040" height="125" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="248" y="539" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">3. TI e IAM configuran</text>
+<text x="248" y="572" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Microsoft 365 y OneLogin. SCIM transmite cambios a la aplicación.</text>
+<polyline points="750,626 750,659" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="750,659 744.345448056554,647.2941876694152 755.654551943446,647.2941876694152" fill="black"/>
+<rect x="230" y="664" width="1040" height="125" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="248" y="702" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">4. Seguridad Física configura</text>
+<text x="248" y="735" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Alta o retiro de tarjeta y prueba del indicador.</text>
+<polyline points="750,789 750,822" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="750,822 744.345448056554,810.2941876694152 755.654551943446,810.2941876694152" fill="black"/>
+<rect x="230" y="827" width="1040" height="125" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="248" y="865" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">5. SOC observa y relaciona</text>
+<text x="248" y="898" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Eventos digitales, tarjeta y video del mismo recorrido.</text>
+<polyline points="750,952 750,985" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="750,985 744.345448056554,973.2941876694152 755.654551943446,973.2941876694152" fill="black"/>
+<rect x="230" y="990" width="1040" height="125" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="248" y="1028" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">6. Auditoría comprueba</text>
+<text x="248" y="1061" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Alta permitida, función anterior retirada o baja rechazada según solicitud.</text>
+<text x="45" y="1254" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="black">IDENTITY ACCESS LAB | Diseño de laboratorio | 02/10/2026</text>
+</svg>

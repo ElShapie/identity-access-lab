@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1170" viewBox="0 0 1560 1170"><rect width="100%" height="100%" fill="white"/>
+<text x="45" y="64" font-family="Times New Roman, Times, serif" font-size="34" font-weight="700" fill="black">Topología de red</text>
+<text x="45" y="101" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Direcciones propuestas. Actualizar si el router o las máquinas virtuales usan otra red.</text>
+<polyline points="45,125 1515,125" fill="none" stroke="black" stroke-width="2"/>
+<rect x="45" y="165" width="400" height="135" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="63" y="202" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">OneLogin</text>
+<text x="63" y="234" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">OIDC: inicio de sesión</text>
+<text x="63" y="262" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">SCIM: altas, cambios y bajas</text>
+<rect x="580" y="165" width="400" height="135" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="598" y="202" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Cloudflare: túnel HTTPS</text>
+<text x="598" y="234" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Solo aplicación de práctica</text>
+<text x="598" y="262" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">URL temporal pública</text>
+<rect x="1115" y="165" width="400" height="135" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="1133" y="202" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Microsoft 365 / Entra</text>
+<text x="1133" y="234" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Cuentas, MFA y registros</text>
+<text x="1133" y="262" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Consolas en internet</text>
+<polyline points="445,232 575,232" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="575,232 563.2941876694152,237.654551943446 563.2941876694152,226.345448056554" fill="black"/>
+<polyline points="780,300 780,390" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="780,390 774.345448056554,378.2941876694152 785.654551943446,378.2941876694152" fill="black"/>
+<text x="790" y="350" font-family="Times New Roman, Times, serif" font-size="20" font-weight="400" fill="black">HTTPS / internet</text>
+<rect x="580" y="390" width="400" height="110" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="598" y="427" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Router / Wi-Fi</text>
+<text x="598" y="459" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">10.31.0.1 | Red 10.31.0.0/24</text>
+<rect x="45" y="390" width="400" height="140" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="63" y="427" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Servidor TI</text>
+<text x="63" y="459" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">10.31.0.10</text>
+<text x="63" y="487" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">App: 127.0.0.1:8000</text>
+<text x="63" y="515" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Túnel saliente a Cloudflare</text>
+<polyline points="445,445 575,445" fill="none" stroke="black" stroke-width="3"/>
+<rect x="1115" y="390" width="400" height="110" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="1133" y="427" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Clientes administrativos</text>
+<text x="1133" y="459" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">TI e IAM | Microsoft / OneLogin</text>
+<polyline points="985,445 1110,445" fill="none" stroke="black" stroke-width="3"/>
+<rect x="580" y="555" width="400" height="100" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="598" y="592" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Switch 1</text>
+<text x="598" y="624" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Equipos principales por cable</text>
+<polyline points="780,500 780,550" fill="none" stroke="black" stroke-width="3"/>
+<rect x="45" y="555" width="400" height="145" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="63" y="592" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Teléfonos por Wi-Fi</text>
+<text x="63" y="624" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Android entrada: 10.31.0.31</text>
+<text x="63" y="652" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">iPhone interior: 10.31.0.32</text>
+<text x="63" y="680" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Video: MJPEG o RTSP</text>
+<polyline points="445,600 505,600 505,470 575,470" fill="none" stroke="black" stroke-width="3"/>
+<rect x="1115" y="555" width="400" height="100" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="1133" y="592" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Switch 2, opcional</text>
+<text x="1133" y="624" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Una conexión al switch 1</text>
+<polyline points="980,605 1110,605" fill="none" stroke="black" stroke-width="3"/>
+<rect x="580" y="730" width="400" height="145" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="598" y="767" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">NVR Frigate</text>
+<text x="598" y="799" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">10.31.0.20</text>
+<text x="598" y="827" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Consulta HTTPS: puerto 8971</text>
+<text x="598" y="855" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Grabaciones en disco</text>
+<polyline points="780,655 780,725" fill="none" stroke="black" stroke-width="3"/>
+<polyline points="245,700 245,802 575,802" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="575,802 563.2941876694152,807.654551943446 563.2941876694152,796.345448056554" fill="black"/>
+<text x="265" y="790" font-family="Times New Roman, Times, serif" font-size="20" font-weight="400" fill="black">Flujo de video hacia NVR</text>
+<rect x="1115" y="730" width="400" height="145" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1133" y="767" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Security Hub SOC</text>
+<text x="1133" y="799" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">10.31.0.40 / 10.31.0.41</text>
+<text x="1133" y="827" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Cámaras y registros</text>
+<text x="1133" y="855" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Móvil en la misma red</text>
+<polyline points="980,802 1110,802" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="1110,802 1098.2941876694151,807.654551943446 1098.2941876694151,796.345448056554" fill="black"/>
+<rect x="45" y="915" width="560" height="155" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="63" y="952" font-family="Times New Roman, Times, serif" font-size="23" font-weight="700" fill="black">Estación de acceso físico</text>
+<text x="63" y="984" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Lector → microcontrolador → USB → laptop</text>
+<text x="63" y="1012" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Laptop 10.31.0.21 | Archivo CSV</text>
+<text x="63" y="1040" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Sin autorización automática a la app</text>
+<polyline points="605,960 780,960 780,875" fill="none" stroke="black" stroke-width="3"/>
+<rect x="900" y="930" width="615" height="135" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="918" y="965" font-family="Times New Roman, Times, serif" font-size="21" font-weight="700" fill="black">Alcance</text>
+<text x="918" y="995" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Red local sin VLAN supuestas. NVR no publicado.</text>
+<text x="918" y="1021" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Nombres, dirección y puertos de cámaras reales</text>
+<text x="918" y="1047" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">se confirman antes de configurar.</text>
+<text x="45" y="1144" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="black">IDENTITY ACCESS LAB | Diseño de laboratorio | 02/10/2026</text>
+</svg>

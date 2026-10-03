@@ -1,0 +1,164 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries IAM: OneLogin, permisos y ciclo de vida\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+\Needspace{5\baselineskip}\section*{Objetivo y reparto}
+Conectar OneLogin con la aplicación para demostrar identidad real, MFA, permisos por puesto y altas/bajas automáticas. No sustituirlo por otro proveedor ni por una pantalla de login creada por el grupo.\par
+IAM tiene cinco puestos: coordinación de roles, conexión OneLogin, MFA y ciclo de vida, pruebas de aprovisionamiento y documentación técnica. Asignar cada función en el control privado.\par
+Laptop IAM 1: administración. IAM 2: navegador de pruebas, con perfiles separados para ingeniero, auditor y usuario sin permiso.\par
+\Needspace{5\baselineskip}\section*{Antes de iniciar}
+Necesitan tenant OneLogin, cuenta administrativa autorizada, aplicación HTTPS activa y capacidad de aprovisionamiento en el plan disponible. Confirmar estas funciones al principio. El acceso de prueba no garantiza todas las funciones: si faltan, solicitar a la institución habilitación o el entorno adecuado.\par
+Recibir de TI APP\_BASE\_URL y SCIM\_TOKEN. Estos son datos de configuración; el token no debe aparecer en capturas. Las operaciones se hacen sobre cuentas de laboratorio.\par
+\Needspace{5\baselineskip}\section*{Paso 1. Crear usuarios de prueba}
+\begin{enumerate}
+\item Abrir el portal administrativo del tenant.
+\item Ir a Users \(\rightarrow\) Users y crear las identidades del recorrido según el registro de RRHH.
+\item Usar el mismo correo en OneLogin, Microsoft 365 y el registro. No es sincronización automática: son cuentas relacionadas por acuerdo.
+\item Registrar LAB-INGENIERO para ingeniero, LAB-ADMIN para administrador y LAB-AUDITOR para auditor.
+\item Preparar también una identidad sin permiso y otra temporal para alta/baja, si los recursos lo permiten.
+\item Hacer que cada usuario establezca su contraseña de laboratorio y registrar quién es responsable de su método MFA.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 2. Definir atributos y roles}
+Crear campos de usuario \textnormal{lab\_\allowbreak{}role} y \textnormal{emp\_\allowbreak{}id} mediante la opción de campos personalizados del tenant. Registrar sus nombres cortos exactamente así.\par
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{5.027cm}p{5.027cm}p{5.027cm}}
+\toprule
+\textbf{Identidad} & \textbf{lab\_role} & \textbf{Uso} \\ \midrule\endfirsthead
+\textbf{Identidad} & \textbf{lab\_role} & \textbf{Uso} \\ \midrule\endhead
+LAB-INGENIERO & mantenimiento & Consultar y ejecutar mantenimiento \\
+LAB-ADMIN & admin & Consultar, mantener, administrar y ver registros \\
+LAB-AUDITOR & auditor & Consultar y ver registros; sin mantenimiento \\
+Usuario de consulta & consulta & Solo consultar \\
+Usuario sin acceso & sin\_acceso & Ninguna función \\
+\bottomrule\end{longtable}}
+El valor \textnormal{title} que recibirá la aplicación por SCIM transporta el código \textnormal{lab\_\allowbreak{}role} en este ejercicio. No es el nombre humano del puesto. El puesto completo permanece en RRHH.\par
+Crear roles en Users \(\rightarrow\) Roles: \textnormal{LAB-Mantenimiento}, \textnormal{LAB-Administracion}, \textnormal{LAB-Auditoria} y, si se usa, \textnormal{LAB-Consulta}. Un rol OneLogin agrupa aplicaciones permitidas; la aplicación comprueba las funciones internas usando el atributo sincronizado.\par
+\Needspace{5\baselineskip}\section*{Paso 3. Crear conector de inicio de sesión}
+\begin{enumerate}
+\item Ir a Applications/Apps \(\rightarrow\) Add Apps y localizar el conector OpenID Connect (OIDC) de OneLogin.
+\item Nombrarlo \textnormal{IDENTITY ACCESS LAB - Servidor}.
+\item Configurar el flujo Authorization Code para una aplicación con servidor. No usar Password Grant ni un secreto dentro del navegador.
+\item Registrar callback exacto: \textnormal{APP\_\allowbreak{}BASE\_\allowbreak{}URL/\allowbreak{}auth/\allowbreak{}callback}.
+\item Registrar URL de inicio como \textnormal{APP\_\allowbreak{}BASE\_\allowbreak{}URL/\allowbreak{}login} si el conector solicita Login URL.
+\item Copiar Client ID y Client Secret al responsable de TI para \textnormal{.env}.
+\item Copiar la dirección de configuración del proveedor OIDC. Para API v2 suele usar \textnormal{/\allowbreak{}oidc/\allowbreak{}2/\allowbreak{}.well-known/\allowbreak{}openid-configuration}; confirmar con el tenant.
+\item Verificar método de autenticación del cliente. Authlib usa el método compatible configurado; si el tenant exige POST y rechaza Basic, TI debe configurar \textnormal{token\_\allowbreak{}endpoint\_\allowbreak{}auth\_\allowbreak{}method=\allowbreak{}'client\_\allowbreak{}secret\_\allowbreak{}post'} en \textnormal{client\_\allowbreak{}kwargs}.
+\item Asociar esta aplicación a los roles de laboratorio autorizados.
+\end{enumerate}
+Resultado: al pulsar login en la aplicación, aparece la página real de OneLogin. Todavía puede haber rechazo al volver si la cuenta no ha sido creada por SCIM.\par
+\Needspace{5\baselineskip}\section*{Paso 4. Configurar MFA OneLogin}
+\begin{enumerate}
+\item Abrir Security \(\rightarrow\) Authentication Factors y habilitar OneLogin Protect u otro factor aceptado por el tenant.
+\item Crear una política de usuario para el laboratorio en Security \(\rightarrow\) Policies.
+\item En su apartado MFA, exigir verificación en cada login para la demostración, cuando aparezca la opción \textnormal{At every login}.
+\item Asociar la política a los usuarios de prueba mediante el grupo o configuración de usuario correspondiente.
+\item En IAM 2, iniciar sesión con el ingeniero y registrar el factor en su teléfono.
+\item Cerrar sesión de OneLogin y aplicación, abrir un perfil limpio y repetir.
+\item Guardar evidencia del desafío y resultado. No fotografiar QR de inscripción ni códigos secretos.
+\end{enumerate}
+El método puede estar en un teléfono distinto del usado como cámara. Si comparten dispositivo, comprobar que cambiar a la app MFA no detiene la cámara antes del ensayo.\par
+\Needspace{5\baselineskip}\section*{Paso 5. Crear conector de altas y bajas}
+El servidor incluido implementa el perfil de práctica SCIM Core 1.0 del conector documentado de OneLogin. No se presenta como una implementación completa de SCIM 2.0.\par
+\begin{enumerate}
+\item Añadir \textnormal{SCIM Provisioner with SAML (Core Schema)} y nombrarlo \textnormal{IDENTITY ACCESS LAB - Provisioning}.
+\item Usar solo su función de aprovisionamiento. El login sigue siendo OIDC; no configurar una URL SAML inexistente para aparentar SSO.
+\item En Configuration, colocar SCIM Base URL: \textnormal{APP\_\allowbreak{}BASE\_\allowbreak{}URL/\allowbreak{}scim/\allowbreak{}v1}.
+\item Colocar el token que TI guardó como SCIM\_TOKEN.
+\item Pegar el archivo \textnormal{Implementacion/\allowbreak{}app/\allowbreak{}scim-template.json} como plantilla.
+\item En Parameters, mapear \textnormal{scimusername} al correo, \textnormal{lab\_\allowbreak{}role} al campo personalizado correspondiente y \textnormal{emp\_\allowbreak{}id} al ID de empleado. Si faltan parámetros, agregarlos y habilitar su inclusión en el aprovisionamiento según la interfaz.
+\item No activar sincronización de grupos: el ejemplo sincroniza usuarios y su rol, no grupos.
+\item Habilitar la conexión y revisar API Status. Si falla, comprobar la URL HTTPS, token y registros del servidor.
+\item En Provisioning, habilitar creación y actualización de usuarios. Para la baja, seleccionar suspensión/desactivación de cuenta y probar qué envío realiza el conector.
+\item Asociar este conector a los mismos roles de laboratorio que el OIDC.
+\end{enumerate}
+La aplicación admite GET/POST de usuarios, consulta por \textnormal{userName}, actualización PUT/PATCH y eliminación. Acepta \textnormal{active:false} y niega acciones a cuentas inactivas. Si se activa una función distinta, como grupos, hay que implementar y probar esa extensión antes de declararla soportada.\par
+\Needspace{5\baselineskip}\section*{Paso 6. Automatizar asignación}
+En Users \(\rightarrow\) Mappings, crear condiciones según el atributo \textnormal{lab\_\allowbreak{}role} y asignar el rol OneLogin correspondiente. Ejemplo: si \textnormal{lab\_\allowbreak{}role} es \textnormal{mantenimiento}, asignar \textnormal{LAB-Mantenimiento}, que incluye ambos conectores.\par
+\begin{enumerate}
+\item Guardar la regla.
+\item Aplicarla al usuario de prueba y comprobar el rol resultante.
+\item Revisar opciones de retirar roles que dejan de cumplir condiciones. No asumir que una regla solo de alta retira automáticamente un permiso viejo.
+\item Para el primer ensayo, se puede aprobar manualmente una operación pendiente en Users \(\rightarrow\) Provisioning.
+\item Para demostrar automatización completa del laboratorio, configurar las aprobaciones permitidas en ese conector de prueba y repetir una nueva alta sin crear la cuenta manualmente en la aplicación.
+\item Registrar si la acción fue automática o si requirió aprobación administrativa. La aprobación no equivale a una creación manual de cuenta, pero debe explicarse.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 7. Probar alta automática}
+\begin{enumerate}
+\item Confirmar que el correo temporal no existe en la aplicación.
+\item Crear o activar el usuario en OneLogin con sus atributos.
+\item Dejar que Mapping asigne su rol o realizar la asignación de rol acordada.
+\item Revisar Users \(\rightarrow\) Provisioning hasta que el evento esté completado.
+\item TI confirma que se creó el usuario local y SOC guarda el evento \textnormal{SCIM\_\allowbreak{}CREATE}.
+\item Iniciar sesión por OIDC y ejecutar consulta y mantenimiento según rol.
+\end{enumerate}
+Una cuenta creada a mano en SQLite o por un curl de prueba no demuestra alta automática desde OneLogin.\par
+\Needspace{5\baselineskip}\section*{Paso 8. Probar autorización}
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{5.027cm}p{5.027cm}p{5.027cm}}
+\toprule
+\textbf{Usuario} & \textbf{Acción} & \textbf{Resultado esperado} \\ \midrule\endfirsthead
+\textbf{Usuario} & \textbf{Acción} & \textbf{Resultado esperado} \\ \midrule\endhead
+Ingeniero & Consulta & Permitido \\
+Ingeniero & Mantenimiento & Permitido \\
+Ingeniero & Administración & 403, denegado \\
+Auditor & Consulta y registros & Permitido \\
+Auditor & Mantenimiento & 403, denegado \\
+Sin aplicación asignada & Login/aplicación & Rechazo según control de OneLogin o aplicación \\
+\bottomrule\end{longtable}}
+Probar con botón o petición real, no solo mirando la pantalla. Para el auditor, el botón mantenimiento se deja visible intencionalmente y el servidor debe rechazarlo.\par
+\Needspace{5\baselineskip}\section*{Paso 9. Probar cambio y baja}
+\begin{enumerate}
+\item Cambiar \textnormal{lab\_\allowbreak{}role} de mantenimiento a auditor en OneLogin.
+\item Comprobar actualización local por SCIM.
+\item Sin cerrar la sesión anterior, intentar mantenimiento: debe ser rechazado después de recibir la actualización.
+\item Probar consulta y registros permitidos.
+\item Desactivar el usuario según la solicitud de RRHH.
+\item Esperar y registrar el evento de suspensión recibido, con su hora real.
+\item Probar acción en sesión previa y nuevo login. La aplicación consulta el estado local en cada acción; tras recibir la baja, la sesión anterior no permite ejecutar funciones.
+\item Verificar baja en Microsoft 365 y RFID con los otros departamentos. Esas acciones no ocurren automáticamente por configurar SCIM de esta aplicación.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Comprobaciones técnicas}
+TI puede comprobar \textnormal{/\allowbreak{}health} sin credenciales. Una consulta SCIM sin token debe devolver 401:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+curl -i http://127.0.0.1:8000/scim/v1/Users
+\end{Comandos}
+En la terminal donde TI cargó \textnormal{.env}, consultar un correo de laboratorio:\par
+\Needspace{6\baselineskip}
+\begin{Comandos}
+curl --get http://127.0.0.1:8000/scim/v1/Users \
+  -H "Authorization: Bearer ${SCIM_TOKEN}" \
+  --data-urlencode 'filter=userName eq "REEMPLAZAR_CORREO"'
+\end{Comandos}
+No pegar el token literal en capturas. Si devuelve \textnormal{totalResults:0}, la cuenta no llegó o se usó otro correo. Si hay 401, revisar token. Si la conexión da 502, revisar Gunicorn y túnel.\par
+\Needspace{5\baselineskip}\section*{Entregan}
+Tabla de roles, configuración OIDC, configuración SCIM sin secretos, reglas, evidencia MFA, altas, cambios, bajas y eventos OneLogin. Escribir cuáles acciones fueron automáticas y cuáles manuales.\par
+\Needspace{5\baselineskip}\section*{Referencias y videos}
+\begin{itemize}
+\item \href{https://developers.onelogin.com/docs/openid-connect/connect-to-onelogin/}{OneLogin: conectar aplicación OIDC}.
+\item \href{https://developers.onelogin.com/docs/openid-connect/api/provider-config/}{OneLogin: configuración del proveedor}.
+\item \href{https://developers.onelogin.com/docs/scim/define-user-schema/}{OneLogin: esquema de usuarios SCIM}.
+\item \href{https://developers.onelogin.com/docs/scim/implement-scim-api/}{OneLogin: implementar API SCIM}.
+\item \href{https://developers.onelogin.com/docs/scim/create-app/}{OneLogin: crear aplicación SCIM de prueba}.
+\item \href{https://www.onelogin.com/getting-started/free-trial-plan/add-mfa}{OneLogin: agregar MFA}.
+\item \href{https://www.onelogin.com/video/groups-roles-and-mappings-oh-my}{Video oficial: grupos, roles y mappings}.
+\item \href{https://www.onelogin.com/resource-center/videos/getting-started-with-identity-lifecycle-management-pt-2}{Video oficial: ciclo de vida, parte 2}.
+\end{itemize}
+\end{document}

@@ -1,0 +1,137 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries Auditoría y Cumplimiento\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+\Needspace{5\baselineskip}\section*{Objetivo y puestos}
+Comprobar que la implementación cumple los requisitos, conservar resultados y preparar el informe con las aportaciones de cada área.\par
+Auditoría tiene tres puestos: revisión de acceso físico y monitoreo, revisión de identidades y permisos, y documentación de resultados. Los responsables se asignan fuera del repositorio.\par
+Laptop 1: pruebas. Laptop 2: informe y evidencias. Auditoría tiene consulta digital; no modifica el sistema para conseguir un resultado aprobado.\par
+\Needspace{5\baselineskip}\section*{Paso 1. Preparar lista de cotejo}
+\begin{enumerate}
+\item Leer las guías del laboratorio y las decisiones de implementación.
+\item Copiar \textnormal{Plantillas/\allowbreak{}pruebas.csv} y \textnormal{Plantillas/\allowbreak{}requisitos.csv}.
+\item Para cada requisito, identificar departamento responsable y evidencia esperada.
+\item Registrar NVR virtual autorizado. Confirmar cómo se documentó el punto de transceptores de video.
+\item Mantener estados pendiente, aprobado, falló y no disponible. Ninguno de los dos últimos significa cumplimiento.
+\item Comprobar que cada prueba tenga condición inicial, pasos, esperado, obtenido y archivo de evidencia.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 2. Revisar organización}
+\begin{enumerate}
+\item Contar 31 personas distintas, no solo 31 IDs.
+\item Verificar que todos los puestos tienen responsable en el control privado.
+\item Verificar que resumen y filas de IAM coincidan con la decisión final.
+\item Comparar tareas y entregables entre pestañas.
+\item Verificar que todos tengan trabajo y que nadie quede sin tarea al combinar puestos.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 3. Auditar RFID}
+\begin{enumerate}
+\item Confirmar modelo y circuito contra su documentación.
+\item Revisar código usado, no únicamente un archivo anterior.
+\item Leer las cuatro tarjetas autorizadas y una no autorizada.
+\item Observar UID, LED y CSV.
+\item Seleccionar salida y repetir lectura; verificar dirección del evento.
+\item Presentar rápidamente una tarjeta repetida y comprobar que no genera salida automática.
+\item Revisar que los UID autorizados correspondan a cuatro identidades distintas.
+\item Después de la baja, repetir tarjeta y comprobar rechazo.
+\end{enumerate}
+Si no hay 31 tarjetas, separar revisión de lista de identidades y tarjetas realmente probadas. No reportar 27 lecturas rechazadas si solo probaron una tarjeta no autorizada.\par
+\Needspace{5\baselineskip}\section*{Paso 4. Auditar NVR}
+\begin{enumerate}
+\item Abrir ambas cámaras en el hub.
+\item Abrirlas desde un teléfono de monitoreo.
+\item Revisar configuración continua, retención y almacenamiento.
+\item Reproducir un periodo sin movimiento; grabar solo movimiento no cumple el comportamiento continuo solicitado.
+\item Exportar video con entrada y salida y abrirlo en otro equipo.
+\item Revisar inicio/fin y cortes del periodo de prueba.
+\item Confirmar que archivos y configuración sobreviven al reinicio de contenedor.
+\item Declarar alcance de red del móvil y duración real de prueba.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 5. Auditar Microsoft 365}
+Comprobar con TI: alta, modificación, restablecimiento de contraseña, licencia asignada, rol, desafío MFA, registros, análisis de amenazas disponible y eliminación de cuenta temporal.\par
+Pedir evidencia de operaciones reales. Una vista de licencia vacía no demuestra asignación. Un teléfono registrado no demuestra que un inicio solicitó MFA. Una vista sin alertas se describe como tal; no inventar incidentes.\par
+Confirmar que no se modificaron cuentas ajenas al laboratorio. Registrar funciones limitadas por licencia o permiso.\par
+\Needspace{5\baselineskip}\section*{Paso 6. Auditar OneLogin y aplicación}
+\begin{enumerate}
+\item Confirmar que login redirige al tenant real OneLogin.
+\item Probar ingeniero, administrador, auditor y usuario sin acceso.
+\item Verificar MFA en la política y en el login probado.
+\item Mostrar mantenimiento permitido al ingeniero y denegado al auditor.
+\item Probar alta desde OneLogin sin crear la cuenta manualmente en la aplicación.
+\item Guardar evento de creación local y evento de aprovisionamiento OneLogin.
+\item Cambiar rol y probar retiro de la función anterior.
+\item Suspender usuario y esperar confirmación SCIM.
+\item Probar nuevo acceso y una acción de sesión ya abierta. La baja no se considera efectiva en la aplicación hasta que llegó el cambio.
+\item Revisar que la API sin token dé 401.
+\end{enumerate}
+La aplicación es de práctica y sus acciones administrativas no modifican el sistema operativo. El resultado evaluado es que el servidor decide permisos correctamente y registra la acción.\par
+\Needspace{5\baselineskip}\section*{Paso 7. Ejecutar recorrido integrado}
+\begin{enumerate}
+\item RRHH muestra alta y autorización.
+\item Visitante presenta tarjeta: acceso físico denegado.
+\item Ingeniero presenta tarjeta: permitido.
+\item Ingeniero inicia sesión con MFA OneLogin.
+\item Ejecuta mantenimiento autorizado.
+\item Auditor intenta mantenimiento y obtiene rechazo.
+\item Ingeniero cierra sesión y registra salida.
+\item Se realiza cambio de rol y baja al final.
+\item SOC reconstruye la secuencia con horas, identidad, registros y video.
+\end{enumerate}
+Registrar ID de prueba y archivo por cada paso. Si falla uno, conservar el fallo y repetir después de corregir, con nueva fecha.\par
+\Needspace{5\baselineskip}\section*{Paso 8. Verificación de archivos}
+En una laptop Ubuntu, pueden crear una lista de huellas de los archivos finales, para comprobar después si cambiaron:\par
+\Needspace{6\baselineskip}
+\begin{Comandos}
+cd ~/lab-runtime/evidencias
+find . -type f ! -name huellas.sha256 -print0 | sort -z | xargs -0 -r sha256sum > huellas.sha256
+sha256sum -c huellas.sha256
+\end{Comandos}
+La huella identifica contenido y cambios; no demuestra por sí sola que una prueba ocurrió. Mantener también fecha, responsable y descripción.\par
+En Windows, para un archivo:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+Get-FileHash .\video_entrada.mp4 -Algorithm SHA256
+\end{Comandos}
+\Needspace{5\baselineskip}\section*{Paso 9. Preparar informe y presentación}
+\begin{enumerate}
+\item Pedir a cada departamento su objetivo, recursos, procedimiento, resultados y evidencias en inglés.
+\item Usar una plantilla IEEE aceptada por el profesor en Overleaf o el entorno LaTeX del grupo.
+\item Mantener Introduction, Theoretical Framework, Development, Results y Conclusion.
+\item En Development, separar acceso físico, monitoreo, Microsoft 365 y OneLogin.
+\item Usar la tabla de pruebas en Results. Describir limitaciones y adaptaciones.
+\item Citar las fuentes oficiales utilizadas; no copiar texto extenso.
+\item Exportar los diagramas PDF a PNG para insertarlos como figuras. Mantener su título y descripción.
+\item Compilar PDF, abrirlo y comprobar nombres, tablas, figuras y referencias.
+\item Preparar presentación breve con empresa, red, controles, recorrido y resultados.
+\item Preparar los entregables acordados sin incluir información personal en el repositorio.
+\end{enumerate}
+Los diagramas PDF y LaTeX están fuera de las guías para poder insertarlos en informe y diapositivas. El organigrama que conserve vacantes no debe presentarse como lista final completa.\par
+\Needspace{5\baselineskip}\section*{Entregan}
+Lista de cotejo con evidencias, resultados de pruebas, limitaciones, informe final en inglés, presentación y lista impresa. Registrar quién revisó cada bloque.\par
+\Needspace{5\baselineskip}\section*{Referencias y videos}
+\begin{itemize}
+\item \href{https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/add-users?view=o365-worldwide}{Microsoft: alta de usuarios, con video oficial}.
+\item \href{https://www.onelogin.com/video/groups-roles-and-mappings-oh-my}{Video oficial OneLogin: roles y mappings}.
+\item \href{https://www.onelogin.com/resource-center/videos/getting-started-with-identity-lifecycle-management-pt-2}{Video oficial OneLogin: ciclo de vida}.
+\item \href{https://docs.frigate.video/configuration/record/}{Frigate: grabación y exportación}.
+\item \href{https://docs.overleaf.com/getting-started/your-first-project}{Overleaf: primer proyecto LaTeX}.
+\item \href{https://www.ieee.org/conferences/publishing/templates.html}{Plantillas IEEE}: confirmar con el profesor la variante exigida.
+\item Referencias y videos del paquete (REFERENCIAS\_Y\_VIDEOS.pdf).
+\end{itemize}
+\end{document}

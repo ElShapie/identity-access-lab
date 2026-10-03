@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1050" viewBox="0 0 1500 1050"><rect width="100%" height="100%" fill="white"/>
+<text x="45" y="64" font-family="Times New Roman, Times, serif" font-size="34" font-weight="700" fill="black">Distribución física del salón</text>
+<text x="45" y="101" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Cada zona tiene una función. La delimitación representa el centro de datos.</text>
+<polyline points="45,125 1455,125" fill="none" stroke="black" stroke-width="2"/>
+<rect x="45" y="170" width="450" height="330" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="63" y="209" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Oficinas corporativas</text>
+<text x="63" y="243" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Dirección y RRHH</text>
+<text x="63" y="273" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Registro de empleados</text>
+<text x="63" y="303" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Solicitudes y aprobación</text>
+<text x="63" y="333" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black"></text>
+<text x="63" y="363" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Sin entrada automática al área</text>
+<text x="63" y="393" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">restringida</text>
+<rect x="550" y="170" width="400" height="330" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="568" y="209" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Operaciones TI / IAM</text>
+<text x="568" y="243" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Red y servidor</text>
+<text x="568" y="273" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Microsoft 365</text>
+<text x="568" y="303" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">OneLogin</text>
+<text x="568" y="333" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Pruebas de usuarios</text>
+<rect x="1005" y="170" width="450" height="330" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1023" y="209" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Security Hub / SOC</text>
+<text x="1023" y="243" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Pantalla de cámaras</text>
+<text x="1023" y="273" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Pantalla de registros</text>
+<text x="1023" y="303" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Incidentes y coordinación</text>
+<rect x="45" y="590" width="450" height="270" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="63" y="629" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Puesto de acceso</text>
+<text x="63" y="663" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Lector, placa y LED</text>
+<text x="63" y="693" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Laptop de eventos</text>
+<text x="63" y="723" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Operador entrada/salida</text>
+<text x="63" y="753" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Teléfono cámara de entrada</text>
+<rect x="550" y="590" width="905" height="270" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="568" y="629" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Centro de datos simulado</text>
+<text x="568" y="663" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Servidor de aplicación y equipo de red</text>
+<text x="568" y="693" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Teléfono cámara interior</text>
+<text x="568" y="723" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Solo LAB-INGENIERO, LAB-ADMIN, LAB-GUARDIA y LAB-AUDITOR</text>
+<text x="568" y="753" font-family="Times New Roman, Times, serif" font-size="23" font-weight="400" fill="black">Paso físico supervisado por operador</text>
+<polyline points="495,725 545,725" fill="none" stroke="black" stroke-width="3"/>
+<polygon points="545,725 533.2941876694152,730.654551943446 533.2941876694152,719.345448056554" fill="black"/>
+<text x="75" y="934" font-family="Times New Roman, Times, serif" font-size="24" font-weight="400" fill="black">Auditoría trabaja en un puesto de consulta y revisa todas las zonas.</text>
+<text x="45" y="1024" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="black">IDENTITY ACCESS LAB | Diseño de laboratorio | 02/10/2026</text>
+</svg>

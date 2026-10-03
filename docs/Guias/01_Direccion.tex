@@ -1,0 +1,102 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries Dirección y Gestión del Proyecto\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+\Needspace{5\baselineskip}\section*{Objetivo y responsabilidades}
+Organizar el trabajo, aprobar reglas del escenario y comprobar que los departamentos entreguen un sistema integrado. Dirección no tiene acceso automático al área restringida ni recibe permisos de administración por su cargo.\par
+Puestos: dirección general, responsable de seguridad y coordinación. Cada puesto debe tener una persona asignada en el control privado. Estos cargos no conceden permisos técnicos por sí mismos.\par
+\Needspace{5\baselineskip}\section*{Paso 1. Asignar puestos sin publicar datos personales}
+\begin{enumerate}
+\item Revisar los 31 puestos genéricos de los diagramas.
+\item Asignar una persona a cada puesto en un registro privado separado del repositorio.
+\item Mantener en privado nombres, correos, tarjetas, aprobadores y contactos.
+\item Confirmar que no hay tareas sin responsable ni conteos duplicados.
+\item Actualizar los departamentos y funciones genéricas si cambia el diseño.
+\item Acordar responsables y suplentes por área en el control privado.
+\end{enumerate}
+Resultado: 31 puestos con tareas definidas y documentación pública sin datos personales.\par
+\Needspace{5\baselineskip}\section*{Paso 2. Registrar decisiones de implementación}
+Completar \textnormal{Plantillas/\allowbreak{}acuerdos.csv} con fecha, decisión, responsable y evidencia. Registrar NVR virtual autorizado, alcance del monitoreo móvil, sustitución de transceptores, recursos de Microsoft 365/OneLogin y formato del informe.\par
+OneLogin es obligatorio: si el entorno no permite un conector o aprovisionamiento, solicitar a la institución acceso o licencia que lo permita. No aprobar una sustitución por otra plataforma.\par
+\Needspace{5\baselineskip}\section*{Paso 3. Asignar equipos}
+\begin{enumerate}
+\item Confirmar las 14 laptops principales del archivo inicial.
+\item Registrar propietario, función, cargador y ubicación.
+\item Seleccionar servidor TI y grabador de Seguridad Física. Identificar su sistema operativo y si se preparará Ubuntu en una máquina virtual.
+\item Reservar dos teléfonos con sus cargadores y soportes.
+\item Confirmar switches, router/punto de acceso, cables y adaptadores.
+\item Asignar fecha para identificar físicamente lector y microcontrolador.
+\end{enumerate}
+Resultado: el inventario indica qué existe y quién lo lleva. “Posiblemente disponible” sigue siendo un pendiente.\par
+\Needspace{5\baselineskip}\section*{Paso 4. Crear calendario por resultados}
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{7.760cm}p{7.760cm}}
+\toprule
+\textbf{Etapa} & \textbf{Resultado exigido para cerrar} \\ \midrule\endfirsthead
+\textbf{Etapa} & \textbf{Resultado exigido para cerrar} \\ \midrule\endhead
+Preparación & Personal, recursos y acceso a plataformas confirmados \\
+Infraestructura & Red, aplicación básica y un teléfono accesible \\
+Control físico & UID, cuatro tarjetas, LED y CSV funcionando \\
+Identidades & OneLogin real, roles, MFA, creación y baja automática \\
+Monitoreo & Dos cámaras, móvil, grabación y recuperación de video \\
+Integración & Entrada, tarea permitida, tarea denegada, salida y baja \\
+Entrega & Pruebas, informe en inglés, presentación y resultados \\
+\bottomrule\end{longtable}}
+Poner fechas reales en el Excel. Una etapa puede continuar mientras otra espera recursos, pero no declarar completa una dependencia que falla.\par
+\Needspace{5\baselineskip}\section*{Paso 5. Aprobar reglas del escenario}
+\begin{enumerate}
+\item Confirmar las cuatro identidades físicas: LAB-INGENIERO, LAB-ADMIN, LAB-GUARDIA y LAB-AUDITOR.
+\item Aprobar funciones digitales: mantenimiento para ingeniero, administración para administrador, consulta/registros para auditor y funciones específicas para Seguridad Física.
+\item Establecer que RRHH solicita, el dueño del recurso aprueba y TI/IAM/Seguridad Física configuran.
+\item Prohibir la aprobación de un permiso por la misma persona que lo solicita cuando puedan separar funciones.
+\item Registrar qué ocurre con una tarjeta desconocida, una baja y un fallo de cámara.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 6. Revisión de progreso}
+En cada reunión, preguntar por resultado, evidencia, dificultad y siguiente acción. Actualizar estado y porcentaje en el Excel. Si se declara “Terminado”, abrir su evidencia y comprobarla.\par
+Ejemplos de dificultades útiles: “La aplicación recibe un rechazo de callback”; “OneLogin deja el alta en pendiente”; “El iPhone cambia de dirección”. Evitar registros como “no funciona” sin indicar el paso fallido.\par
+\Needspace{5\baselineskip}\section*{Paso 7. Coordinar ensayo y exposición}
+\begin{enumerate}
+\item Comprobar que RRHH dio de alta al ingeniero antes del recorrido.
+\item TI, IAM y Seguridad Física verifican el estado inicial.
+\item SOC abre imágenes y registros.
+\item Mostrar visitante rechazado, ingeniero autorizado, MFA, mantenimiento, auditor rechazado en mantenimiento y salida.
+\item Hacer cambio de rol y baja al final para no romper los pasos anteriores.
+\item Auditoría presenta resultados reales y limitaciones.
+\item Medir duración y ajustar al tiempo del profesor.
+\end{enumerate}
+Guardar una copia de videos y registros por si falla internet en vivo. Esas evidencias corresponden a un ensayo identificado; no simular que ocurrieron en ese momento.\par
+\Needspace{5\baselineskip}\section*{Comandos y archivos}
+Dirección trabaja principalmente en el control compartido. Para crear carpetas en una laptop Ubuntu:\par
+\Needspace{5\baselineskip}
+\begin{Comandos}
+mkdir -p ~/lab-runtime/evidencias/direccion
+mkdir -p ~/lab-runtime/entrega
+\end{Comandos}
+En Windows, crear las mismas carpetas con el explorador. No necesitan instalar Docker ni ejecutar comandos administrativos para coordinar el grupo.\par
+\Needspace{5\baselineskip}\section*{Entregan}
+Lista revisada, decisiones, inventario, calendario, política de acceso, guion y carpeta de entrega. Cada documento indica fecha y responsable.\par
+\Needspace{5\baselineskip}\section*{Referencias y videos}
+\begin{itemize}
+\item \href{https://www.onelogin.com/video/groups-roles-and-mappings-oh-my}{Video oficial OneLogin: grupos, roles y asignación automática}: comprender qué debe pedir Dirección a IAM.
+\item \href{https://www.onelogin.com/resource-center/videos/getting-started-with-identity-lifecycle-management-pt-2}{Video oficial OneLogin: ciclo de vida de identidades, parte 2}: identificar resultados de altas y bajas.
+\item \href{https://onelogin.service-now.com/kb?id=kb_article_view&sysparm_article=KB0010298}{Introducción oficial al aprovisionamiento}: diferencia entre asignar una aplicación y mantener su cuenta sincronizada.
+\item Referencia del proyecto (REFERENCIAS\_Y\_VIDEOS.pdf): fuentes y materiales compartidos.
+\end{itemize}
+\end{document}

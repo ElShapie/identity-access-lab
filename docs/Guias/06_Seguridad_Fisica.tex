@@ -1,0 +1,213 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries Seguridad Física: RFID, teléfonos y NVR virtual\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+\Needspace{5\baselineskip}\section*{Objetivo y responsables}
+Controlar entrada/salida de cuatro identidades autorizadas y mantener video que permita comprobar los eventos. El NVR virtual está autorizado.\par
+Seguridad Física tiene cinco puestos: coordinación de acceso, montaje del lector, autorización RFID y LED, cámaras y grabación, y operación de entrada y salida.\par
+Laptop 1: lector y registro. Laptop 2: Ubuntu, Docker y Frigate. SOC observa; Seguridad Física administra el NVR. TI apoya red y certificados.\par
+\Needspace{5\baselineskip}\section*{Parte A. Identificar lector y microcontrolador}
+Antes de conectar:\par
+\begin{enumerate}
+\item Fotografiar etiquetas y modelo de lector y placa.
+\item Identificar alimentación y forma de conexión: USB, SPI, I2C o serie.
+\item Buscar la hoja de datos del fabricante y confirmar tarjetas compatibles.
+\item Si el lector es USB que actúa como teclado, comprobar con el profesor cómo se cubrirá el microcontrolador requerido; no aplicar el código MFRC522.
+\item Si el lector es PN532, elegir su biblioteca y conexión; no usar el cableado MFRC522.
+\item Usar el ejemplo incluido solo cuando se confirme Arduino Uno + MFRC522.
+\end{enumerate}
+\Needspace{4\baselineskip}\subsection*{Ejemplo Arduino Uno y MFRC522}
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{7.760cm}p{7.760cm}}
+\toprule
+\textbf{Lector MFRC522} & \textbf{Arduino Uno} \\ \midrule\endfirsthead
+\textbf{Lector MFRC522} & \textbf{Arduino Uno} \\ \midrule\endhead
+3.3V & 3.3V \\
+GND & GND \\
+RST & D9, con adaptación de nivel cuando corresponda \\
+SDA/SS & D10, con adaptación de nivel \\
+MOSI & D11, con adaptación de nivel \\
+MISO & D12, comprobar compatibilidad de entrada \\
+SCK & D13, con adaptación de nivel \\
+IRQ & Sin conectar en este ejemplo \\
+\bottomrule\end{longtable}}
+El MFRC522 trabaja a 3.3 V y no debe alimentarse con 5 V. Las salidas Uno son de 5 V: comprobar el módulo concreto y usar un adaptador de niveles adecuado para las señales hacia el lector. No asumir que todos los módulos incluyen esa protección. El pin marcado SDA en este modo es selección SPI, no la conexión I2C de un ejemplo distinto.\par
+LED verde: D4 \(\rightarrow\) resistencia apropiada, por ejemplo 330 Ω \(\rightarrow\) LED \(\rightarrow\) GND. LED rojo: D5 con su propia resistencia. Confirmar polaridad y componentes antes de conectar USB.\par
+\Needspace{4\baselineskip}\subsection*{Cargar código}
+\begin{enumerate}
+\item Instalar Arduino IDE desde su sitio oficial.
+\item En administrador de bibliotecas, instalar MFRC522 del proyecto miguelbalboa/rfid.
+\item Seleccionar Arduino Uno y puerto correcto.
+\item Abrir \textnormal{Implementacion/\allowbreak{}rfid/\allowbreak{}control\_\allowbreak{}acceso.ino} y cargar.
+\item Abrir monitor serie a 9600 baudios.
+\item Presentar una tarjeta. Inicialmente se niega: el código no contiene UID reales.
+\item Copiar el UID sin espacios, en mayúsculas, y relacionarlo con empleado.
+\item Reemplazar los cuatro valores pendientes con los UID de LAB-INGENIERO, LAB-ADMIN, LAB-GUARDIA y LAB-AUDITOR.
+\item Comprobar que no se repiten UID, cargar de nuevo y probar las cuatro.
+\item Probar una tarjeta distinta y verificar LED rojo y rechazo.
+\end{enumerate}
+El ejemplo compara identificadores para cumplir la práctica. Un UID no demuestra una credencial resistente a copia; describir el alcance del prototipo sin atribuirle protección que no se implementó.\par
+\Needspace{5\baselineskip}\section*{Parte B. Guardar entradas y salidas}
+Cerrar monitor serie antes de abrir el registro Python: ambos no deben ocupar el mismo puerto.\par
+En Ubuntu:\par
+\Needspace{10\baselineskip}
+\begin{Comandos}
+mkdir -p ~/lab-runtime/rfid
+cd ~/lab-runtime/rfid
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install 'pyserial>=3.5,<4'
+python -m serial.tools.list_ports
+python registrar_tarjetas.py --puerto /dev/ttyACM0 --archivo eventos_rfid.csv
+\end{Comandos}
+Copiar antes el script desde \textnormal{Implementacion/\allowbreak{}rfid/\allowbreak{}}. Si Ubuntu niega el puerto, TI revisa pertenencia al grupo \textnormal{dialout}, añade solo al operador autorizado y vuelve a iniciar sesión. No cambiar permisos del puerto para todos.\par
+En Windows, con Python instalado:\par
+\Needspace{7\baselineskip}
+\begin{Comandos}
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install pyserial
+.\.venv\Scripts\python.exe -m serial.tools.list_ports
+.\.venv\Scripts\python.exe registrar_tarjetas.py --puerto COM3 --archivo eventos_rfid.csv
+\end{Comandos}
+Reemplazar COM3 o \textnormal{/\allowbreak{}dev/\allowbreak{}ttyACM0} por el puerto real. Escribir E y Enter para entrada, S y Enter para salida. La siguiente lectura muestra el modo utilizado. Se guarda hora UTC y local, movimiento, UID, resultado y empleado.\par
+La cámara y el operador comprueban el paso real: una lectura permitida no demuestra por sí sola que la persona cruzó. Sin cerradura electrónica, el operador permite/niega el paso de forma supervisada.\par
+Para revocar una tarjeta, retirar su UID autorizado en el programa, volver a cargar y repetir prueba. La lista máxima tiene cuatro identidades; después de una baja puede tener menos. No autorizar automáticamente a una quinta para ocupar un lugar.\par
+\Needspace{5\baselineskip}\section*{Parte C. Configurar teléfonos}
+\Needspace{4\baselineskip}\subsection*{Android: cámara de entrada}
+\begin{enumerate}
+\item Instalar IP Webcam desde Google Play, paquete \textnormal{com.pas.webcam}.
+\item Conectar a Wi-Fi de laboratorio y a corriente.
+\item Permitir cámara. Desactivar grabación de audio si no se utiliza.
+\item Seleccionar inicialmente 640 × 480 y alrededor de 5-10 cuadros por segundo.
+\item Configurar usuario y contraseña de laboratorio en la app. Usar valores que no contengan caracteres reservados de URL o codificarlos correctamente.
+\item Iniciar el servidor y anotar la dirección que realmente muestra.
+\item Abrir la página desde una laptop y encontrar el enlace de video MJPEG. Habitualmente es \textnormal{http:/\allowbreak{}/\allowbreak{}IP:8080/\allowbreak{}video}; confirmar con la app.
+\item Anotar dirección real en inventario y configuración Frigate.
+\item Reservar la dirección del teléfono en el router para que no cambie.
+\end{enumerate}
+\Needspace{4\baselineskip}\subsection*{iPhone: cámara interior}
+\begin{enumerate}
+\item Instalar IP Camera Lite desde App Store y abrir su modo servidor de cámara IP.
+\item Permitir cámara y acceso a red local.
+\item Configurar video H.264 y resolución inicial reducida.
+\item Configurar credenciales propias; no dejar las predeterminadas.
+\item Copiar la URL RTSP completa que entrega la app: puerto y ruta pueden variar.
+\item Probarla en VLC mediante Medio \(\rightarrow\) Abrir ubicación de red.
+\item Mantener la app en primer plano y el teléfono alimentado; comprobar qué ocurre si se bloquea o cambia de app.
+\item Registrar dirección, puerto y ruta. El ejemplo \textnormal{8554/\allowbreak{}REEMPLAZAR\_\allowbreak{}RUTA\_\allowbreak{}REAL} no es una ruta garantizada.
+\end{enumerate}
+La versión Lite puede añadir marca de agua. Comprobar si afecta la evidencia. Si una app no logra un stream compatible y estable, resolverlo antes de confiar en ella para grabar todo el ensayo.\par
+\Needspace{4\baselineskip}\subsection*{Probar un stream}
+TI puede instalar FFmpeg en Ubuntu:\par
+\Needspace{5\baselineskip}
+\begin{Comandos}
+sudo apt install -y ffmpeg
+ffprobe -v error -show_streams 'REEMPLAZAR_URL_REAL_DE_CAMARA'
+\end{Comandos}
+Para RTSP también puede usar \textnormal{-rtsp\_\allowbreak{}transport tcp} antes de la URL. No publicar el comando con credenciales en la evidencia. Resultado esperado: stream de video identificado y dimensiones reales. Una página web de la cámara no es necesariamente la URL del video.\par
+\Needspace{5\baselineskip}\section*{Parte D. Instalar Frigate}
+TI debe haber instalado Docker según su guía. Copiar \textnormal{Implementacion/\allowbreak{}nvr/\allowbreak{}} a \textnormal{\textasciitilde{}/\allowbreak{}lab-runtime/\allowbreak{}nvr/\allowbreak{}}.\par
+\Needspace{8\baselineskip}
+\begin{Comandos}
+cd ~/lab-runtime/nvr
+mkdir -p config media certs
+cp config.example.yml config/config.yml
+cp .env.example .env
+chmod 600 .env
+\end{Comandos}
+Editar \textnormal{.env} con las credenciales de ambas cámaras. En \textnormal{config/\allowbreak{}config.yml}, reemplazar direcciones, puerto y ruta reales. Si usan dos Android, duplicar el bloque MJPEG con nombre diferente; si usan dos iPhone, duplicar RTSP. No usar preset HTTP en una URL RTSP.\par
+El archivo activa grabación continua por un día y desactiva detección de objetos. Eso reduce tareas innecesarias, pero el video aún requiere procesamiento. MJPEG se convierte para grabarlo y puede consumir más CPU que RTSP/H.264. Reducir resolución/cuadros si el equipo se satura.\par
+\Needspace{4\baselineskip}\subsection*{Certificado local para el NVR}
+El NVR usa HTTPS con autenticación. TI prepara un certificado válido para su dirección de laboratorio y distribuye únicamente la autoridad pública a los dispositivos que lo consultarán.\par
+En la laptop NVR:\par
+\Needspace{7\baselineskip}
+\begin{Comandos}
+sudo apt install -y mkcert libnss3-tools
+mkcert -install
+mkcert -cert-file certs/fullchain.pem -key-file certs/privkey.pem 10.31.0.20 localhost 127.0.0.1
+mkcert -CAROOT
+\end{Comandos}
+El último comando muestra la carpeta con \textnormal{rootCA.pem}. Copiar solo ese archivo a los clientes y verificar con TI que corresponde al certificado del laboratorio. No compartir \textnormal{rootCA-key.pem} ni \textnormal{privkey.pem}.\par
+\begin{itemize}
+\item Ubuntu cliente: instalar el certificado público en el almacén de confianza con apoyo de TI y reiniciar navegador.
+\item Windows cliente: importar el certificado público como autoridad de confianza del laboratorio, con permiso del propietario del equipo.
+\item iPhone: instalar perfil del certificado y habilitar su confianza en Ajustes, según la guía mkcert/Apple.
+\item Android: instalar certificado de autoridad en Seguridad/Cifrado y credenciales, según versión; confirmar que el navegador utilizado lo reconoce.
+\end{itemize}
+Si hay advertencia de certificado, corregir dirección o confianza con TI. No indicar a los usuarios que ignoren la advertencia. Retirar la autoridad de laboratorio de los equipos personales al cerrar el proyecto si ya no se necesita.\par
+\Needspace{4\baselineskip}\subsection*{Iniciar grabador}
+En \textnormal{compose.yml}, reemplazar \textnormal{10.31.0.20} si el NVR tiene otra dirección. Esa dirección debe existir en la laptop o máquina virtual que ejecuta Docker.\par
+\Needspace{8\baselineskip}
+\begin{Comandos}
+sudo docker compose config --quiet
+sudo docker compose pull
+sudo docker compose up -d
+sudo docker compose ps
+sudo docker compose logs --tail=100 frigate
+\end{Comandos}
+Abrir \textnormal{https:/\allowbreak{}/\allowbreak{}10.31.0.20:8971} desde un cliente preparado. La contraseña inicial del administrador aparece en los logs del primer arranque. Cambiarla desde Settings \(\rightarrow\) Users y crear usuarios de consulta para SOC. No entregar a todo el grupo credenciales de administrador.\par
+Frigate permanece en la red local. No publicar su puerto interno 5000 ni dirigir el túnel de la aplicación al NVR.\par
+Si el validador de Frigate rechaza una clave, comprobar la versión instalada y su esquema antes de cambiar configuración. No sustituir el archivo por un YAML de un video antiguo.\par
+\Needspace{5\baselineskip}\section*{Parte E. Probar grabación y almacenamiento}
+\begin{enumerate}
+\item Ver ambas cámaras en Live.
+\item Dejar grabar diez minutos, incluyendo un periodo sin movimiento.
+\item Abrir History, elegir cada cámara y reproducir inicio, mitad y final de la prueba.
+\item Exportar un intervalo donde se vea el acceso autorizado y otro con rechazo.
+\item Abrir los MP4 exportados en otra laptop.
+\item Comprobar espacio real:
+\end{enumerate}
+\Needspace{6\baselineskip}
+\begin{Comandos}
+df -h .
+du -sh media
+sudo docker stats --no-stream identity-access-lab-nvr
+\end{Comandos}
+Estimar consumo diario a partir de una muestra real. Ejemplo propuesto: dos streams de 2 Mb/s suman unos 43.2 GB al día antes de otros archivos. La cifra cambia con cámaras y conversión; no reservar espacio basándose solo en ese ejemplo.\par
+Para demostrar 24/7, dejar grabar 24 horas si el calendario lo permite, mantener energía y evitar suspensión/cierre de tapa. SOC registra cortes. Si solo probaron una hora, declarar una hora y configuración continua; no declarar 24 horas sin evidencia. Con retención de un día, exportar evidencias antes de que salgan de la ventana. Aumentar retención solo si hay espacio suficiente.\par
+\Needspace{5\baselineskip}\section*{Parte F. Móvil y continuidad}
+\begin{enumerate}
+\item Abrir la dirección HTTPS del NVR en el navegador del teléfono de monitoreo.
+\item Iniciar sesión con usuario de consulta y verificar Live e History.
+\item Probar el acceso desde la misma red y registrar ese alcance. Para otra red se requiere un diseño de acceso remoto adicional; no basta cambiar el teléfono a datos móviles.
+\item Reiniciar el contenedor durante una prueba controlada y comprobar retorno del servicio y persistencia de videos.
+\item Guardar configuración sin secretos y copia del circuito/código.
+\end{enumerate}
+\Needspace{5\baselineskip}
+\begin{Comandos}
+sudo docker compose restart frigate
+sudo docker compose logs --tail=50 frigate
+\end{Comandos}
+Resultado esperado: vuelve a grabar y conserva archivos previos. Registrar el corte provocado, no ocultarlo en la prueba de continuidad.\par
+\Needspace{5\baselineskip}\section*{Entregan}
+Modelo real de placa/lector, circuito, código adaptado, cuatro UID registrados, CSV, ubicaciones de cámaras, configuración Frigate, exportaciones, duración probada, espacio y monitoreo móvil. No incluir secretos ni claves de certificados.\par
+\Needspace{5\baselineskip}\section*{Referencias y videos}
+\begin{itemize}
+\item \href{https://docs.frigate.video/frigate/installation/}{Frigate: instalación}.
+\item \href{https://docs.frigate.video/configuration/record/}{Frigate: grabación continua}.
+\item \href{https://docs.frigate.video/configuration/ffmpeg_presets/}{Frigate: presets MJPEG y RTSP}.
+\item \href{https://docs.frigate.video/configuration/authentication/}{Frigate: autenticación} y \href{https://docs.frigate.video/configuration/tls/}{certificados}.
+\item \href{https://play.google.com/store/apps/details?id=com.pas.webcam}{Android IP Webcam} y \href{https://apps.apple.com/us/app/ip-camera-lite/id1013455241}{iPhone IP Camera Lite}.
+\item \href{https://github.com/miguelbalboa/rfid}{Biblioteca RFID y modelos compatibles}.
+\item \href{https://github.com/FiloSottile/mkcert}{Certificados de laboratorio mkcert}.
+\item \href{https://www.youtube.com/watch?v=KMD72_Wfp3E}{Video: Frigate con Docker}: apoyo visual; no necesitan su parte de IA, MQTT ni Home Assistant.
+\item \href{https://www.youtube.com/watch?v=CQLPo7xqORQ}{Video: Arduino y MFRC522}: solo si coincide el hardware; revisar alimentación y niveles contra el módulo real.
+\end{itemize}
+\end{document}

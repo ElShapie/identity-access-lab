@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1070" viewBox="0 0 1500 1070"><rect width="100%" height="100%" fill="white"/>
+<text x="45" y="64" font-family="Times New Roman, Times, serif" font-size="34" font-weight="700" fill="black">Identidad, permisos y video</text>
+<text x="45" y="101" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">Tres controles diferentes: entrar, iniciar sesión y ejecutar una función.</text>
+<polyline points="45,125 1455,125" fill="none" stroke="black" stroke-width="2"/>
+<rect x="45" y="180" width="440" height="275" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="63" y="218" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">Control físico</text>
+<text x="63" y="251" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Tarjeta → lector → placa → LED</text>
+<text x="63" y="280" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Lista de cuatro identidades</text>
+<text x="63" y="309" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">CSV y cámara confirman el evento</text>
+<rect x="535" y="180" width="440" height="275" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="553" y="218" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">Identidad digital</text>
+<text x="553" y="251" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Navegador → OneLogin → MFA →</text>
+<text x="553" y="280" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">aplicación</text>
+<text x="553" y="309" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">OIDC valida la identidad</text>
+<text x="553" y="338" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Cuenta activa debe existir por SCIM</text>
+<rect x="1025" y="180" width="440" height="275" rx="12" fill="black" stroke="black" stroke-width="2"/>
+<text x="1043" y="218" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">Permisos de aplicación</text>
+<text x="1043" y="251" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Rol sincronizado desde OneLogin</text>
+<text x="1043" y="280" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Ingeniero: mantenimiento</text>
+<text x="1043" y="309" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Auditor: consulta; mantenimiento</text>
+<text x="1043" y="338" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">denegado</text>
+<rect x="45" y="570" width="660" height="190" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="63" y="608" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">SCIM: sincronización de cuentas</text>
+<text x="63" y="641" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">OneLogin envía creación, cambio y baja a la app.</text>
+<text x="63" y="670" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">La app revisa estado y rol en cada acción.</text>
+<text x="63" y="699" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Baja recibida: sesión anterior pierde permisos.</text>
+<rect x="795" y="570" width="660" height="190" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="813" y="608" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">Frigate: evidencia de video</text>
+<text x="813" y="641" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Los teléfonos transmiten al NVR.</text>
+<text x="813" y="670" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">SOC consulta grabaciones y relaciona la hora.</text>
+<text x="813" y="699" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Frigate usa sus propias cuentas de consulta.</text>
+<rect x="45" y="825" width="1410" height="150" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="63" y="863" font-family="Times New Roman, Times, serif" font-size="24" font-weight="700" fill="black">Microsoft 365</text>
+<text x="63" y="896" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">Se administra por separado en el entorno autorizado. RRHH relaciona identidades mediante ID/correo.</text>
+<text x="63" y="925" font-family="Times New Roman, Times, serif" font-size="22" font-weight="400" fill="black">No se afirma sincronización de contraseñas ni federación Microsoft 365–OneLogin.</text>
+<text x="45" y="1044" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="black">IDENTITY ACCESS LAB | Diseño de laboratorio | 02/10/2026</text>
+</svg>

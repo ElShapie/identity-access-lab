@@ -1,0 +1,100 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries Recursos Humanos\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+\Needspace{5\baselineskip}\section*{Objetivo y puestos}
+Mantener el registro de empleados y comunicar altas, cambios y bajas. RRHH define la situación laboral del escenario; el dueño de cada recurso aprueba sus accesos.\par
+RRHH tiene tres funciones: validar solicitudes, preparar altas y administrar cambios y bajas. TI mantiene el registro técnico validado por RRHH. Los nombres y correos reales se guardan únicamente en el control privado.\par
+Laptop 1: registro. Laptop 2: solicitudes y seguimiento.\par
+\Needspace{5\baselineskip}\section*{Paso 1. Preparar registro común}
+\begin{enumerate}
+\item Copiar \textnormal{Plantillas/\allowbreak{}empleados.csv} a la carpeta compartida.
+\item Mantener un ID EMP por integrante. No cambiar ID al cambiar departamento.
+\item Escribir nombre, puesto, departamento y estado.
+\item Coordinar con TI un correo de laboratorio. Usar exactamente el mismo correo como identidad de la aplicación y OneLogin.
+\item Registrar acceso físico, rol de aplicación y responsables de aprobación.
+\item Comprobar nombres distintos contra la lista completa del salón.
+\end{enumerate}
+El registro debe tener 31 personas distintas. No incluir contraseñas, códigos de MFA ni claves. Si no hay licencia para 31 cuentas, registrar a todo el grupo y acordar las identidades digitales de prueba; no declarar que las demás cuentas fueron creadas.\par
+\Needspace{5\baselineskip}\section*{Paso 2. Preparar una solicitud}
+Abrir \textnormal{Plantillas/\allowbreak{}solicitudes.csv}. Usar una fila por solicitud y completar:\par
+\begin{itemize}
+\item Número: SOL-001, SOL-002, etc.
+\item Tipo: alta, cambio de puesto o baja.
+\item ID de empleado y correo.
+\item Fecha efectiva.
+\item Recursos solicitados y rol.
+\item Quién aprobó y qué departamento implementa.
+\item Evidencia y resultado.
+\end{itemize}
+Si una solicitud afecta varias áreas, registrar qué acción corresponde a cada una. “Cuenta creada” no demuestra que la tarjeta o aplicación ya funcionen.\par
+\Needspace{5\baselineskip}\section*{Paso 3. Ejecutar alta del ingeniero}
+\begin{enumerate}
+\item Elegir LAB-INGENIERO para el recorrido principal.
+\item Registrar puesto Ingeniero de redes A y estado activo.
+\item Solicitar a TI cuenta corporativa de prueba.
+\item Solicitar acceso digital de mantenimiento a IAM, con aprobación de TI como dueño del servidor.
+\item Solicitar tarjeta a Seguridad Física, porque está entre los cuatro autorizados.
+\item Confirmar que la aplicación recibió la cuenta por SCIM desde OneLogin. Pedir evidencia de creación automática, no solo una captura del portal.
+\item Confirmar registro de MFA con IAM.
+\item Pedir pruebas de tarjeta e inicio de sesión y actualizar solicitud como completada.
+\end{enumerate}
+Resultado: empleado activo, cuenta preparada, tarjeta registrada y mantenimiento permitido.\par
+\Needspace{5\baselineskip}\section*{Paso 4. Ejecutar cambio de puesto}
+Usar una cuenta de prueba o hacer esta acción después del recorrido principal.\par
+\begin{enumerate}
+\item Registrar rol anterior mantenimiento y rol nuevo auditor/consulta.
+\item Solicitar retiro del permiso anterior y aprobación del nuevo.
+\item IAM cambia el atributo y transmite el cambio a la aplicación.
+\item Solicitar una prueba con la sesión que ya estaba abierta: mantenimiento debe ser denegado después de que llegue el cambio.
+\item Pedir una nueva prueba de consulta permitida.
+\item Revisar con Seguridad Física si cambia el acceso físico. No dar entrada a una quinta identidad.
+\item Guardar evidencia de las dos pruebas y cerrar solicitud.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 5. Ejecutar baja}
+\begin{enumerate}
+\item Registrar fecha y hora de baja y marcar el empleado como inactivo.
+\item Enviar la solicitud a TI, IAM y Seguridad Física.
+\item TI bloquea el inicio de sesión de Microsoft 365 y revoca sesiones según la guía.
+\item IAM desactiva al usuario y comprueba el evento de suspensión automática en la aplicación.
+\item Seguridad Física retira el UID de autorizados y vuelve a cargar el programa.
+\item Pedir pruebas de un nuevo inicio de sesión, acción en una sesión anterior y presentación de la tarjeta.
+\item Cerrar la solicitud solo cuando las áreas presenten resultados.
+\end{enumerate}
+La baja física del ejemplo RFID es manual. La baja digital por SCIM es automática después del cambio en OneLogin. Registrar esa diferencia.\par
+\Needspace{5\baselineskip}\section*{Paso 6. Mantener seguimiento}
+Revisar solicitudes abiertas y comprobar que tienen responsable y fecha. Si una está bloqueada por falta de licencia, registrar ese motivo. Una fila aprobada no significa que ya esté implementada.\par
+En el Excel, las tareas combinadas de IAM deben reflejar qué persona hizo cada configuración. Reunir las solicitudes con Auditoría antes del ensayo.\par
+\Needspace{5\baselineskip}\section*{Carpeta y uso del CSV}
+\Needspace{4\baselineskip}
+\begin{Comandos}
+mkdir -p ~/lab-runtime/evidencias/rrhh
+\end{Comandos}
+Abrir los CSV con Excel o Google Sheets y elegir UTF-8 si pregunta por codificación. Conservar los encabezados. Los formularios no envían instrucciones a los sistemas automáticamente: son el registro del procedimiento entre áreas.\par
+\Needspace{5\baselineskip}\section*{Entregan}
+Registro de 31 empleados, solicitudes de alta/cambio/baja y evidencia de su cierre. Para el informe, describir quién solicita, quién aprueba, quién implementa y quién verifica.\par
+\Needspace{5\baselineskip}\section*{Referencias y videos}
+\begin{itemize}
+\item \href{https://www.onelogin.com/resource-center/videos/getting-started-with-identity-lifecycle-management-pt-2}{Video oficial OneLogin: ciclo de vida, parte 2}: ver creación, cambio y retiro de cuentas.
+\item \href{https://onelogin.service-now.com/kb?id=kb_article_view&sysparm_article=KB0010298}{Introducción oficial al aprovisionamiento}: resultados que RRHH debe pedir a IAM.
+\item \href{https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/remove-former-employee-step-1?view=o365-worldwide}{Microsoft: bloquear acceso de un empleado que sale}: resultados que debe pedir a TI.
+\item Referencias del paquete (REFERENCIAS\_Y\_VIDEOS.pdf).
+\end{itemize}
+\end{document}

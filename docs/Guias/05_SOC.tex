@@ -1,0 +1,137 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{fontspec}
+% Instalar Times New Roman y compilar con XeLaTeX para usar la fuente solicitada.
+\setmainfont{Times New Roman}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{longtable,array,booktabs,fvextra,enumitem,fancyhdr,needspace}
+\usepackage[hidelinks,unicode]{hyperref}
+\usepackage{xurl}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{3em}
+\setlist{nosep,leftmargin=1.5em,topsep=5pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small IDENTITY ACCESS LAB}\fancyhead[R]{\small Manual de laboratorio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{15pt}
+\DefineVerbatimEnvironment{Comandos}{Verbatim}{breaklines,breakanywhere,fontsize=\small,fontfamily=\rmdefault,frame=single,framesep=5pt}
+\begin{document}
+{\LARGE\bfseries SOC: monitoreo, registros e incidentes\par}\vspace{6pt}
+2 de octubre de 2026\par\hrule\vspace{10pt}
+\Needspace{5\baselineskip}\section*{Objetivo y puestos}
+Observar accesos y actividad, relacionar video con registros y coordinar una respuesta. SOC no modifica cuentas o tarjetas sin solicitarlo al área responsable.\par
+SOC tiene cinco puestos: coordinación, monitoreo de entrada, monitoreo interior y móvil, consulta de registros y respuesta a incidentes. Cada puesto usa un identificador genérico en las evidencias públicas.\par
+Laptop SOC 1: video. SOC 2: registros e incidentes. No necesitan instalar un sistema adicional de análisis: el hub puede mostrar las fuentes en ventanas separadas.\par
+\Needspace{5\baselineskip}\section*{Paso 1. Preparar el puesto}
+\begin{enumerate}
+\item Conectar ambas laptops a la red acordada.
+\item Abrir el NVR en SOC 1 con una cuenta de consulta, no administrador.
+\item Comprobar cámaras entrada/interior y recuperación de video.
+\item Abrir en SOC 2 el CSV del lector, la aplicación de registros y exportaciones OneLogin/Microsoft.
+\item Crear carpeta de evidencias y copiar \textnormal{Plantillas/\allowbreak{}incidentes.csv}.
+\item Confirmar con TI que las horas están sincronizadas.
+\end{enumerate}
+La hora de Frigate en carpetas de grabación puede estar en UTC y la vista del navegador en hora local. Conservar zona horaria en el registro del incidente; el CSV RFID incluye ambas. No comparar una hora UTC con otra local como si fueran iguales.\par
+\Needspace{5\baselineskip}\section*{Paso 2. Consultar fuentes}
+\Needspace{4\baselineskip}\subsection*{RFID}
+Pedir a Seguridad Física una copia actualizada de \textnormal{eventos\_\allowbreak{}rfid.csv} o acceso de lectura al registro. Verificar UID, resultado, empleado y entrada/salida. La lectura es un evento de autorización; confirmar cruce real con video.\par
+Si SOC usa Ubuntu y recibió la copia:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+tail -n 20 eventos_rfid.csv
+\end{Comandos}
+Para seguimiento de un archivo local que el operador actualiza:\par
+\Needspace{4\baselineskip}
+\begin{Comandos}
+tail -f eventos_rfid.csv
+\end{Comandos}
+Una copia descargada no se actualiza automáticamente. No describir ese comando como integración en tiempo real si el archivo no se comparte ni sincroniza.\par
+\Needspace{4\baselineskip}\subsection*{Aplicación}
+Iniciar sesión por OneLogin con \textnormal{lab\_\allowbreak{}role=\allowbreak{}auditor} y abrir \textnormal{/\allowbreak{}registros}. La aplicación devuelve los últimos 100 eventos: SCIM\_CREATE, SCIM\_UPDATE, LOGIN\_ONELOGIN, acciones permitidas/denegadas y LOGOUT\_APP.\par
+Guardar una exportación después de cada ensayo. La cuenta auditora puede leer, pero no ejecutar mantenimiento o administración. Los fallos que ocurren antes de volver de OneLogin se consultan también en OneLogin: no todos aparecen como login local.\par
+\Needspace{4\baselineskip}\subsection*{OneLogin}
+IAM abre Activity/Events y Users \(\rightarrow\) Provisioning según las opciones del tenant. Filtrar por usuario y periodo. SOC conserva capturas o exportaciones con: evento, usuario, hora, resultado y aplicación. Distinguir intento de login, asignación de rol y creación/suspensión de cuenta de aplicación.\par
+\Needspace{4\baselineskip}\subsection*{Microsoft 365}
+TI entrega registros de auditoría/inicio de sesión de Entra y, cuando aplique, registros Microsoft 365/Purview y vistas de amenazas. Una creación de usuario y un acceso a un documento son actividades distintas; no mezclar sus fuentes.\par
+\Needspace{5\baselineskip}\section*{Paso 3. Relacionar un recorrido}
+Elegir LAB-INGENIERO y registrar:\par
+{\small\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{p{7.760cm}p{7.760cm}}
+\toprule
+\textbf{Fuente} & \textbf{Qué buscar} \\ \midrule\endfirsthead
+\textbf{Fuente} & \textbf{Qué buscar} \\ \midrule\endhead
+RRHH & Cuenta, puesto y autorización aprobada \\
+RFID & UID de LAB-INGENIERO, entrada permitida y hora \\
+Cámara entrada & Persona presenta tarjeta y cruza \\
+OneLogin & Inicio de sesión y MFA del usuario \\
+Aplicación & Mantenimiento permitido \\
+Cámara interior & Persona trabaja en la estación \\
+Aplicación & Cierre de sesión \\
+RFID/cámara & Salida registrada y persona saliendo \\
+\bottomrule\end{longtable}}
+Guardar IDs de pruebas y archivos en \textnormal{Plantillas/\allowbreak{}pruebas.csv}. No afirmar que existe un panel automático que relaciona todas las fuentes: en este montaje la correlación es manual mediante identidad y hora.\par
+\Needspace{5\baselineskip}\section*{Paso 4. Probar un acceso físico denegado}
+\begin{enumerate}
+\item La persona no autorizada presenta su tarjeta.
+\item Seguridad Física registra DENEGADO y muestra LED rojo.
+\item El analista de entrada anota la hora y confirma que no cruzó.
+\item El responsable SOC verifica si es una prueba esperada o un incidente.
+\item Para el ejercicio, abrir INC-001 y adjuntar lectura y video.
+\item Solicitar revisión de UID/lista si el rechazo no era esperado.
+\item Registrar respuesta y cierre con Auditoría.
+\end{enumerate}
+No bloquear una cuenta corporativa solo porque una tarjeta fue rechazada una vez. Determinar qué control falló y qué acción corresponde.\par
+\Needspace{5\baselineskip}\section*{Paso 5. Probar un permiso digital denegado}
+\begin{enumerate}
+\item El auditor inicia sesión correctamente.
+\item Intenta mantenimiento con el botón de la aplicación.
+\item La aplicación devuelve 403 y registra DENEGADO.
+\item SOC registra usuario, función y hora.
+\item IAM confirma que \textnormal{lab\_\allowbreak{}role=\allowbreak{}auditor} no permite mantenimiento.
+\item Auditoría registra que el control funcionó.
+\end{enumerate}
+Ese rechazo es un resultado esperado de permisos; la autenticación sí fue correcta. Explicar ambas cosas por separado.\par
+\Needspace{5\baselineskip}\section*{Paso 6. Responder a fallo de cámara o NVR}
+\begin{enumerate}
+\item Identificar cámara que no muestra imagen o intervalo sin grabación.
+\item Registrar hora de detección y periodo afectado conocido.
+\item Seguridad Física comprueba alimentación, app abierta y URL.
+\item TI comprueba red y dirección del teléfono.
+\item En el NVR, el responsable ejecuta:
+\end{enumerate}
+\Needspace{7\baselineskip}
+\begin{Comandos}
+cd ~/lab-runtime/nvr
+sudo docker compose ps
+sudo docker compose logs --tail=100 frigate
+df -h .
+\end{Comandos}
+\begin{enumerate}
+\item Tras corregir, SOC comprueba imagen y un archivo de grabación nuevo.
+\item Registrar duración del corte. La recuperación no elimina el hueco de video.
+\end{enumerate}
+\Needspace{5\baselineskip}\section*{Paso 7. Monitoreo desde teléfono}
+\begin{enumerate}
+\item Preparar confianza del certificado según la guía de Seguridad Física.
+\item Abrir NVR HTTPS en navegador móvil.
+\item Usar cuenta de consulta y comprobar imagen de ambas cámaras.
+\item Buscar un evento en History y reproducirlo.
+\item Guardar evidencia de qué red usaba el móvil.
+\end{enumerate}
+La interfaz web funciona como acceso móvil. Si el profesor exige una app instalada específica o acceso desde otra red, Dirección confirma ese alcance y TI prepara una solución compatible. Este paquete implementa acceso desde la red de laboratorio.\par
+\Needspace{5\baselineskip}\section*{Paso 8. Turnos y continuidad}
+Asignar quién observa entrada, interior y registros durante cada periodo de prueba. Si hacen prueba de 24 horas, acordar revisiones y disponibilidad del operador; no mantener una persona despierta todo el periodo. El grabador debe continuar aunque la pantalla de SOC esté cerrada.\par
+Registrar inicio/fin de cada revisión, cámaras disponibles, espacio, último segmento reproducible e incidentes abiertos. Finalizar cada turno dejando pendientes al siguiente responsable.\par
+\Needspace{5\baselineskip}\section*{Entregan}
+Vista del hub, prueba móvil, reconstrucción del recorrido, INC-001 físico, prueba de rechazo digital y registro de continuidad. Cada evidencia lleva fecha, hora, fuente y responsable.\par
+\Needspace{5\baselineskip}\section*{Referencias y videos}
+\begin{itemize}
+\item \href{https://docs.frigate.video/configuration/record/}{Frigate: historial y grabaciones}.
+\item \href{https://docs.frigate.video/configuration/authentication/}{Frigate: usuarios y permisos}.
+\item \href{https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-audit-logs}{Microsoft: registros de auditoría}.
+\item \href{https://onelogin.service-now.com/kb?id=kb_article_view&sysparm_article=KB0010298}{OneLogin: eventos de aprovisionamiento}.
+\item \href{https://www.youtube.com/watch?v=KMD72_Wfp3E}{Video Frigate: instalación e interfaz}: usar como orientación visual; los menús pueden cambiar.
+\item \href{https://www.onelogin.com/resource-center/videos/getting-started-with-identity-lifecycle-management-pt-2}{Video oficial OneLogin: ciclo de vida}.
+\end{itemize}
+\end{document}

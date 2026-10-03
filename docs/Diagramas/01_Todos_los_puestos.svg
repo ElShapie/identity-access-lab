@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="2800" viewBox="0 0 1900 2800"><rect width="100%" height="100%" fill="white"/>
+<text x="45" y="64" font-family="Times New Roman, Times, serif" font-size="34" font-weight="700" fill="black">Todos los puestos de la empresa</text>
+<text x="45" y="101" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">31 puestos genéricos. Las asignaciones personales se mantienen en un control privado.</text>
+<polyline points="45,125 1855,125" fill="none" stroke="black" stroke-width="2"/>
+<rect x="45" y="165" width="590" height="1069" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="63" y="208" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Dirección · 3 puestos</text>
+<rect x="57" y="231" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="257" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-001</text>
+<text x="71" y="286" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 001</text>
+<text x="71" y="328" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Director general / DPO</text>
+<rect x="57" y="373" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="399" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-002</text>
+<text x="71" y="428" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 002</text>
+<text x="71" y="470" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Responsable de seguridad</text>
+<rect x="57" y="515" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="541" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-003</text>
+<text x="71" y="570" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 003</text>
+<text x="71" y="612" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Coordinador del proyecto</text>
+<rect x="655" y="165" width="590" height="1069" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="673" y="208" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">RRHH · 3 puestos</text>
+<rect x="667" y="231" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="681" y="257" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-004</text>
+<text x="681" y="286" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 004</text>
+<text x="681" y="328" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Responsable de RRHH</text>
+<rect x="667" y="373" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="681" y="399" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-005</text>
+<text x="681" y="428" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 005</text>
+<text x="681" y="470" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Encargado de altas</text>
+<rect x="667" y="515" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="681" y="541" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-006</text>
+<text x="681" y="570" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 006</text>
+<text x="681" y="612" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Encargado de cambios y bajas</text>
+<rect x="1265" y="165" width="590" height="1069" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1283" y="208" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">TI · 7 puestos</text>
+<rect x="1277" y="231" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="257" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-007</text>
+<text x="1291" y="286" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 007</text>
+<text x="1291" y="328" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Registro de personal validado por RRHH</text>
+<rect x="1277" y="373" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="399" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-008</text>
+<text x="1291" y="428" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 008</text>
+<text x="1291" y="470" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Responsable de TI</text>
+<rect x="1277" y="515" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="541" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">LAB-INGENIERO · Acceso físico</text>
+<text x="1291" y="570" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 009</text>
+<text x="1291" y="612" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Ingeniero de redes A</text>
+<rect x="1277" y="657" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="683" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-010</text>
+<text x="1291" y="712" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 010</text>
+<text x="1291" y="754" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Ingeniero de redes B</text>
+<rect x="1277" y="799" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="825" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">LAB-ADMIN · Acceso físico</text>
+<text x="1291" y="854" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 011</text>
+<text x="1291" y="896" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Administrador de sistemas</text>
+<rect x="1277" y="941" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="967" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-012</text>
+<text x="1291" y="996" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 012</text>
+<text x="1291" y="1038" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Administrador de Microsoft 365</text>
+<rect x="1277" y="1083" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="1109" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-013</text>
+<text x="1291" y="1138" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 013</text>
+<text x="1291" y="1180" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Técnico de soporte</text>
+<rect x="45" y="1266" width="590" height="785" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="63" y="1309" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">IAM · 5 puestos</text>
+<rect x="57" y="1332" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="1358" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-014</text>
+<text x="71" y="1387" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 014</text>
+<text x="71" y="1429" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Responsable de IAM</text>
+<rect x="57" y="1474" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="1500" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-015</text>
+<text x="71" y="1529" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 015</text>
+<text x="71" y="1571" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">OneLogin y roles/permisos</text>
+<rect x="57" y="1616" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="1642" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-016</text>
+<text x="71" y="1671" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 016</text>
+<text x="71" y="1713" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Pruebas de aprovisionamiento</text>
+<rect x="57" y="1758" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="1784" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-017</text>
+<text x="71" y="1813" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 017</text>
+<text x="71" y="1855" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">MFA y ciclo de vida</text>
+<rect x="57" y="1900" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="1926" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-018</text>
+<text x="71" y="1955" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 018</text>
+<text x="71" y="1997" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Documentación técnica de IAM</text>
+<rect x="655" y="1266" width="590" height="785" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="673" y="1309" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">SOC · 5 puestos</text>
+<rect x="667" y="1332" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="681" y="1358" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-019</text>
+<text x="681" y="1387" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 019</text>
+<text x="681" y="1429" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Responsable del SOC</text>
+<rect x="667" y="1474" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="681" y="1500" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-020</text>
+<text x="681" y="1529" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 020</text>
+<text x="681" y="1571" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Analista de monitoreo A</text>
+<rect x="667" y="1616" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="681" y="1642" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-021</text>
+<text x="681" y="1671" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 021</text>
+<text x="681" y="1713" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Analista de monitoreo B</text>
+<rect x="667" y="1758" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="681" y="1784" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-022</text>
+<text x="681" y="1813" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 022</text>
+<text x="681" y="1855" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Analista de registros</text>
+<rect x="667" y="1900" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="681" y="1926" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-023</text>
+<text x="681" y="1955" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 023</text>
+<text x="681" y="1997" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Respuesta a incidentes</text>
+<rect x="1265" y="1266" width="590" height="785" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1283" y="1309" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Seguridad Física · 5 puestos</text>
+<rect x="1277" y="1332" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="1358" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">LAB-GUARDIA · Acceso físico</text>
+<text x="1291" y="1387" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 024</text>
+<text x="1291" y="1429" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Responsable de Seguridad Física</text>
+<rect x="1277" y="1474" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="1500" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-025</text>
+<text x="1291" y="1529" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 025</text>
+<text x="1291" y="1571" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Encargado RFID A</text>
+<rect x="1277" y="1616" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="1642" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-026</text>
+<text x="1291" y="1671" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 026</text>
+<text x="1291" y="1713" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Encargado RFID B</text>
+<rect x="1277" y="1758" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="1784" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-027</text>
+<text x="1291" y="1813" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 027</text>
+<text x="1291" y="1855" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Cámaras y grabación</text>
+<rect x="1277" y="1900" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="1291" y="1926" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-028</text>
+<text x="1291" y="1955" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 028</text>
+<text x="1291" y="1997" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Operador de entrada y salida</text>
+<rect x="45" y="2083" width="590" height="501" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="63" y="2126" font-family="Times New Roman, Times, serif" font-size="25" font-weight="700" fill="black">Auditoría · 3 puestos</text>
+<rect x="57" y="2149" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="2175" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">LAB-AUDITOR · Acceso físico</text>
+<text x="71" y="2204" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 029</text>
+<text x="71" y="2246" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Auditor de acceso físico y monitoreo</text>
+<rect x="57" y="2291" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="2317" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-030</text>
+<text x="71" y="2346" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 030</text>
+<text x="71" y="2388" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Auditor de identidades y permisos</text>
+<rect x="57" y="2433" width="566" height="128" rx="12" fill="white" stroke="black" stroke-width="2"/>
+<text x="71" y="2459" font-family="Times New Roman, Times, serif" font-size="18" font-weight="700" fill="black">PUESTO-031</text>
+<text x="71" y="2488" font-family="Times New Roman, Times, serif" font-size="20" font-weight="700" fill="black">Puesto 031</text>
+<text x="71" y="2530" font-family="Times New Roman, Times, serif" font-size="19" font-weight="400" fill="black">Documentación y evidencias</text>
+<text x="45" y="2671" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">No contiene nombres, cuentas, tarjetas ni asignaciones personales.</text>
+<text x="45" y="2706" font-family="Times New Roman, Times, serif" font-size="21" font-weight="400" fill="black">La autorización física se limita a LAB-INGENIERO, LAB-ADMIN, LAB-GUARDIA y LAB-AUDITOR.</text>
+<text x="45" y="2774" font-family="Times New Roman, Times, serif" font-size="18" font-weight="400" fill="black">IDENTITY ACCESS LAB | Diseño de laboratorio | 02/10/2026</text>
+</svg>
