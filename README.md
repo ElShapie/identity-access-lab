@@ -96,3 +96,7 @@ La documentación y los ejemplos se revisaron antes de publicar. Las pruebas loc
 ## Guías actuales por identificador
 
 Las [diligencias operativas](docs/DILIGENCIAS_POR_AREA.md) y los [cuadernos PDF por área](docs/Controles_Area/) usan identificadores `EMP` y no publican nombres personales. Cada responsable y trabajador puede consultar actividad, entregable, pruebas y ruta de reporte.
+
+## Manual del dashboard para responsables
+
+La guía pública [GUIA_USO_DASHBOARD_RESPONSABLES.pdf](GUIA_USO_DASHBOARD_RESPONSABLES.pdf) explica el acceso, la navegación, la carga y corrección de evidencias, el reporte de incidentes, el seguimiento del avance, las solicitudes de ayuda y el organigrama. Sus capturas usan datos ficticios y no incluyen la dirección del sistema.

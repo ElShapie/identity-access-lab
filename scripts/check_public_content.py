@@ -18,7 +18,7 @@ SECRET_PATTERNS = (
 EMAIL = re.compile(r'[\w.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}')
 FORBIDDEN_EXTENSIONS = {'.db','.sqlite','.sqlite3','.xlsx','.xls','.zip','.pem','.key','.p12','.pfx','.mp4','.mkv','.avi','.jpg','.jpeg','.png','.gif','.webp','.log'}
 FORBIDDEN_DIRS = {'privado','private','evidencias','evidence','data','media','certs','.venv','__pycache__'}
-ALLOWED_TOP = {'README.md','CONTRIBUTING.md','PRIVACIDAD.md','.gitignore','docs','Implementacion','Plantillas','scripts','.github'}
+ALLOWED_TOP = {'README.md','CONTRIBUTING.md','PRIVACIDAD.md','GUIA_USO_DASHBOARD_RESPONSABLES.pdf','.gitignore','docs','Implementacion','Plantillas','scripts','.github'}
 
 def text_issues(text):
     result=[]
