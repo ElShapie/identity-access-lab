@@ -92,3 +92,7 @@ Consultar [referencias y videos](docs/REFERENCIAS_Y_VIDEOS.md), [cómo contribui
 ## Estado de validación
 
 La documentación y los ejemplos se revisaron antes de publicar. Las pruebas locales de permisos pasan. La integración OneLogin, el video continuo y el hardware deben comprobarse con las cuentas y equipos del laboratorio. No guardar los resultados con personas identificadas en GitHub, incluidos Issues, comentarios o pull requests.
+
+## Guías actuales por identificador
+
+Las [diligencias operativas](docs/DILIGENCIAS_POR_AREA.md) y los [cuadernos PDF por área](docs/Controles_Area/) usan identificadores `EMP` y no publican nombres personales. Cada responsable y trabajador puede consultar actividad, entregable, pruebas y ruta de reporte.
